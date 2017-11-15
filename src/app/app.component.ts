@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  gameConfig = {
+    w: 600,
+    h: 200,
+    backgroundColor: 'lightyellow'
+  };
+  stylesSettings = {
+    lineColor: 'gray',
+    fillColor: 'lightyellow',
+    opcity: 0.4
+  }
 }

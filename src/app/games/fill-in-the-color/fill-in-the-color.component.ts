@@ -8,6 +8,7 @@ import { ShapesService } from './../../services/shapes.service';
 })
 export class FillInTheColorComponent implements OnInit, AfterViewInit {
   @Input() gameSettings: any;
+  @Input() stylesSettings: any;
 
   shapesService: ShapesService;
 
@@ -22,16 +23,10 @@ export class FillInTheColorComponent implements OnInit, AfterViewInit {
     // TODO -- start drawing
     this.shapesService = new ShapesService('gamecanvas');
 
-    this.shapesService.drawCircle({
-      stroke: 'black',
-      fill: {
-        r: 255,
-        g: 0,
-        b: 0,
-        a: 0.4
-      },
-      thickness: 1
-    }, {x: 15, y: 15, r: 15});
+    this.shapesService.drawCircle(this.stylesSettings, {x: 15, y: 15, r: 15});
+    this.shapesService.drawSquare(this.stylesSettings, {x: 25, y: 25, w: 20});
+    this.shapesService.drawRect(this.stylesSettings, {x: 50, y: 50, w: 20, h: 10});
+
 
     // var stage = new createjs.Stage("gamecanvas");
     // var circle = new createjs.Shape();

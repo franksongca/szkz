@@ -8,13 +8,13 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'app';
   gameConfig = {
-    w: 600,
-    h: 200,
+    w: 800,
+    h: 300,
     backgroundColor: 'lightyellow'
   };
   stylesSettings = {
-    lineColor: 'gray',
-    fillColor: 'lightyellow',
-    opcity: 0.4
+    stroke: 'gray',
+    fill: 'lightyellow',
+    thickness: 1
   }
 }

@@ -8,9 +8,6 @@ export class ShapesService {
 
   constructor(canvasId: string) {
     this.stage = new createjs.Stage(canvasId);
-
-
-
   }
 
   drawCircle(drwaingSettings, shapeSettings) {
@@ -27,13 +24,36 @@ export class ShapesService {
   }
 
   drawSquare(drwaingSettings, shapeSettings) {
+    let square = new createjs.Shape();
+    let fill;
 
+    square.graphics.setStrokeStyle(drwaingSettings.thickness)
+      .beginStroke(this.getRGB(drwaingSettings.stroke))
+      .beginFill(this.getRGB(drwaingSettings.fill))
+      .drawRect(shapeSettings.x, shapeSettings.y, shapeSettings.w, shapeSettings.w);
+
+    this.stage.addChild(square);
+    this.stage.update();
   }
 
-  private getRGB(colorVar) {
-    if (typeof colorVar !== 'string') {
-      colorVar = createjs.Graphics.getRGB(colorVar.r, colorVar.g, colorVar.b, colorVar.a ? colorVar.a : 1);
+  drawRect(drwaingSettings, shapeSettings) {
+    let rect = new createjs.Shape();
+    let fill;
+
+    rect.graphics.setStrokeStyle(drwaingSettings.thickness)
+      .beginStroke(this.getRGB(drwaingSettings.stroke))
+      .beginFill(this.getRGB(drwaingSettings.fill))
+      .drawRect(shapeSettings.x, shapeSettings.y, shapeSettings.w, shapeSettings.h);
+
+    this.stage.addChild(rect);
+    this.stage.update();
+  }
+
+
+  private getRGB(colorValue) {
+    if (typeof colorValue !== 'string') {
+      colorValue = createjs.Graphics.getRGB(colorValue.r, colorValue.g, colorValue.b, colorValue.a ? colorValue.a : 1);
     }
-    return colorVar;
+    return colorValue;
   }
 }

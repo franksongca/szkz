@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import { CommonService } from './../common.service'
-import { ArticleListService } from './article-list.service'
+import { CommonService } from './../common.service';
+import { PinyinService } from './pinyin.service';
+import { ArticleListService } from './article-list.service';
 import { Http } from '@angular/http';
 
 
@@ -19,10 +20,11 @@ export class ArticleService {
   }
 
   loadArticle(code) {
-    var group = ArticleListService.getArticleGroupIndex(code),
+    const group = ArticleListService.getArticleGroupIndex(code),
       article = code.split('-'),
-      url,// = "data\\WenZhang\\" + article[0] + "\\" + (group == undefined ? "" : "g" + group + "\\") + article[1] + "\\text.xml",
       blankCharacter = {hanZi: '', pinYin: '', shengDiao: '', 'ori_id': '', mistake: 0, index: 0, characterIndex: ''};
+    let url; // = "data\\WenZhang\\" + article[0] + "\\" + (group == undefined ? "" : "g" + group + "\\") + article[1] + "\\text.xml",
+
 
     this.articleType = article[0];
     this.articleCode = article[1];
@@ -34,18 +36,9 @@ export class ArticleService {
     this.http.get(url).subscribe(
       (response) => {
         console.log('load ' + url + ' and parse the data.');
-        let oParser = new DOMParser(),
+        const oParser = new DOMParser(),
           oDOM = oParser.parseFromString(response['_body'].toString(), 'text/xml'),
           pagesAttributes: any = oDOM.firstChild.attributes,
-          attributes,
-          ziObj,
-          pageObj,
-          cuePointsText,
-          charCount,
-          characterIndex,
-          appendChars,
-          i,
-          cuePoint,
           attrLineSpacing = 'line_spacing',
           attrRowsPerPage = 'rows_per_page',
           attrCharactersPerRow = 'characters_per_row',
@@ -55,7 +48,16 @@ export class ArticleService {
           attrShengDiao = 'sheng_diao',
           attrPinYin = 'pin_yin',
           attrOriginalId = 'ori_id',
-          attrXuHao = 'xu_hao',
+          attrXuHao = 'xu_hao';
+        let attributes,
+          ziObj,
+          pageObj,
+          cuePointsText,
+          charCount,
+          characterIndex,
+          appendChars,
+          i,
+          cuePoint,
           tempChar;
 
         const currentArticle: any = {};
@@ -73,7 +75,7 @@ export class ArticleService {
 
         currentArticle.pages = [];
         for (let indexPage = 0; indexPage < oDOM.firstChild['children'].length; indexPage++) {
-          let page = oDOM.firstChild['children'][indexPage];
+          const page = oDOM.firstChild['children'][indexPage];
           pageObj = {};
 
           pageObj.pageAttributes = {};
@@ -95,10 +97,10 @@ export class ArticleService {
           charCount = 0;
           characterIndex = 0;
 
-          for (let indexParagraph = 0; indexParagraph < page.getElementsByTagName('paragraph').length; indexParagraph++) {//page.getElementsByTagName('paragraph').forEach((p) => {
-            let p = page.getElementsByTagName('paragraph')[indexParagraph];
+          for (let indexParagraph = 0; indexParagraph < page.getElementsByTagName('paragraph').length; indexParagraph++) { // page.getElementsByTagName('paragraph').forEach((p) => {
+            const p = page.getElementsByTagName('paragraph')[indexParagraph];
             for (let indexZi = 0; indexZi < p.getElementsByTagName('zi').length; indexZi++) {
-              let zi = p.getElementsByTagName('zi')[indexZi];
+              const zi = p.getElementsByTagName('zi')[indexZi];
               attributes = zi.attributes;
               ziObj = {};
 
@@ -116,8 +118,8 @@ export class ArticleService {
               } else {
                 ziObj.hanZi = attributes[attrHanZi].value;
                 if (ziObj.hanZi === '') {
-                  //var p = ziObj.hanZi;
-                  //ziObj.hanZi = "&nbsp;";
+                  // var p = ziObj.hanZi;
+                  // ziObj.hanZi = "&nbsp;";
                 }
 
                 ziObj.shengDiao = attributes[attrShengDiao].value;
@@ -144,9 +146,19 @@ export class ArticleService {
                 ziObj.mistakes = attributes.mistakes.value;
                 ziObj.times = attributes.times.value;
                 ziObj.index = attributes[attrXuHao].value;
+
+                if (ziObj.pinYin !== '') {
+                  const pinyinObj = PinyinService.buildPinYin({
+                    pinyin: attributes[attrPinYin].value,
+                    tone: attributes[attrShengDiao].value,
+                    shengMuColor: 'blue',
+                    yunMuColor: '#990000'
+                  });
+                  ziObj.pinyinObj = pinyinObj;
+                }
                 pageObj.characters.push(ziObj);
 
-                //console.log("ziObj.index=" + ziObj.index + ":" + charCount);
+                // console.log("ziObj.index=" + ziObj.index + ":" + charCount);
                 charCount++;
               }
             }
@@ -209,11 +221,10 @@ export class ArticleService {
   }
 
   getPageLines(index) {
-    let lines = [],
-      counter = 0,
-      lineCount = 0,
+    const lines = [],
       characters = this.currentArticle.pages[index].characters;
-
+    let counter = 0,
+      lineCount = 0;
     lines[0] = [];
     for (let i = 0; i < characters.length; i++) {
       counter++;
@@ -237,14 +248,14 @@ export class ArticleService {
   }
 
   getAudioURL(audioFormat) {
-    let code = this.getArticleType() + '-' + this.getArticleCode(),
+    const code = this.getArticleType() + '-' + this.getArticleCode(),
       group = ArticleListService.getArticleGroupIndex(code),
       article = code.split('-');
 
     audioFormat = audioFormat || 'mp3';
 
-    return this.getAudioBaseURL() +  'WenZhang/' +article[0] + '/' +
-      (group === undefined ? '' : 'g'+group + '/') +
+    return this.getAudioBaseURL() +  'WenZhang/' + article[0] + '/' +
+      (group === undefined ? '' : 'g' + group + '/') +
       article[1] + '/' + (audioFormat === undefined ? '' : (audioFormat + '/'));
   }
 }

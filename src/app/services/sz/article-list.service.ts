@@ -67,28 +67,28 @@ export class ArticleListService {
 
     articleGroup = ArticleListService.getArticleGroup(option);
 
-    article = articleGroup.articles.find((article) => {
-      return article.code === (option.type + '-' + option.code.toUpperCase());
+    article = articleGroup.articles.find((a) => {
+      return a.code === (option.type + '-' + option.code.toUpperCase());
     });
 
     return article;
   }
 
   static getArticleTypeLabel (type) {
-    let articleGroup = ArticleListService.articleList.articles.find((articleGroup) => {
-      return articleGroup.type === type;
+    const articleGroup = ArticleListService.articleList.articles.find((ag) => {
+      return ag.type === type;
     });
 
     return articleGroup.label;
   }
 
   static getArticleGroup(option) {
-    var articleGroup;
+    let articleGroup;
 
     option = ArticleListService.convertArticleCode(option);
 
-    articleGroup = ArticleListService.articleList.articles.find((articleGroup) => {
-      return articleGroup.type === option.type;
+    articleGroup = ArticleListService.articleList.articles.find((ag) => {
+      return ag.type === option.type;
     });
 
     return articleGroup;

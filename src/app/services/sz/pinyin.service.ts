@@ -4,11 +4,10 @@ import { Injectable } from '@angular/core';
 export class PinyinService {
   static YunMu = [
     // [韵母，声调位置]
-    ['iong', 2], ['ueng', 2], ['ieng', 2], ['uang', 2], ['iang', 2], //no ['ueng', 2], ['ieng', 2] in the real world, should remove them!!!
+    ['iong', 2], ['ueng', 2], ['ieng', 2], ['uang', 2], ['iang', 2], // no ['ueng', 2], ['ieng', 2] in the real world, should remove them!!!
     ['ang', 1], ['eng', 1], ['ong', 1], ['ven', 1], ['ien', 2], ['uan', 2], ['van', 2], ['ian', 2], ['iou', 2], ['iao', 2], ['uai', 2],
     ['ia', 2], ['ua', 2], ['uo', 2], ['ie', 2], ['ve', 2], ['er', 1], ['ai', 1], ['ei', 1], ['ui', 2], ['ao', 1], ['ou', 1], ['an', 1], ['en', 1], ['un', 1],
-
-    //iou，uei，uen前面加声母的时候，写成iu，ui，un。例如niu（牛），gui（归），lun（论）
+    // iou，uei，uen前面加声母的时候，写成iu，ui，un。例如niu（牛），gui（归），lun（论）
     ['iu', 2],
 
     ['a', 1], ['o', 1], ['e', 1], ['i', 1], ['u', 1], ['v', 1]
@@ -17,10 +16,10 @@ export class PinyinService {
   static ShengMu = [
     'zh', 'ch', 'sh', 'b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 'g', 'k', 'h', 'j', 'q', 'x', 'r', 'z', 'c', 's',
 
-    //i列的韵母，前面没有声母的时候，写成yi（衣），ya（呀），ye（耶），yao（腰），you（优），yan（烟），yin（因），yang（央），ying（英），yong（雍）。
-    //ü列的韵母，前面没有声母的时候，写成yu（迂），yue（约），yuan（冤），yun（晕）。
+    // i列的韵母，前面没有声母的时候，写成yi（衣），ya（呀），ye（耶），yao（腰），you（优），yan（烟），yin（因），yang（央），ying（英），yong（雍）。
+    // ü列的韵母，前面没有声母的时候，写成yu（迂），yue（约），yuan（冤），yun（晕）。
     'y',
-    //u列的韵母，前面没有声母的时候写成wu（乌），wa（蛙），wo（窝），wai（歪），wei（威），wan（弯），wen（温），wang（汪），weng（翁）。
+    // u列的韵母，前面没有声母的时候写成wu（乌），wa（蛙），wo（窝），wai（歪），wei（威），wan（弯），wen（温），wang（汪），weng（翁）。
     'w'
   ];
 
@@ -40,7 +39,7 @@ export class PinyinService {
     'h': '-a-e-u-ai-ao-an-ang-ei-en-eng-ou-ong-ua-uo-uai-ui-uan-un-uang-',
     'j': '-i-v-ia-iao-ie-iu-ian-in-iang-ing-iong-ve-van-vn-',
     'q': '-i-v-ia-iao-ie-iu-ian-in-iang-ing-iong-ve-van-vn-',
-    'x': '-i-v-ia-iao-ie-iu-ian-in-iang-ing-iong-ve-van-vn-',   //'-i-u-v-ia-iao-ie-iu-ian-in-iang-ing-iong-uan-un-ve-van-vn-',
+    'x': '-i-v-ia-iao-ie-iu-ian-in-iang-ing-iong-ve-van-vn-',   // '-i-u-v-ia-iao-ie-iu-ian-in-iang-ing-iong-uan-un-ve-van-vn-',
     'z': '-a-e-i-u-ai-ao-an-ang-ei-en-eng-ou-ong-uo-uai-ui-uan-un-',
     'c': '-a-e-i-u-ai-ao-an-ang-ei-en-eng-ou-ong-uo-ui-uan-un-',
     's': '-a-e-i-u-ai-ao-an-ang-en-eng-ou-ong-uo-ui-uan-un-',
@@ -48,7 +47,7 @@ export class PinyinService {
     'ch': '-a-e-i-u-ai-ao-an-ang-en-eng-ou-ong-ua-uo-uai-uan-un-uang-',
     'sh': '-a-e-i-u-ai-ao-an-ang-ei-en-eng-ou-ua-uo-uai-ui-uan-un-uang-',
     'r': '-e-i-u-ao-an-ang-en-eng-ou-ong-ua-uo-uan-un-',
-    'y': '-a-e-i-v-ao-an-ang-in-ing-ou-ong-ve-van-vn-', //'-a-o-e-i-u-v-ao-an-ang-in-ing-ou-ong-uan-un-ve-van-vn-',
+    'y': '-a-e-i-v-ao-an-ang-in-ing-ou-ong-ve-van-vn-', // '-a-o-e-i-u-v-ao-an-ang-in-ing-ou-ong-uan-un-ve-van-vn-',
     'w': '-a-o-u-ai-an-ang-ei-en-eng-',
     'none': '-a-o-e-ai-ao-an-ang-ei-en-eng-ou-er-'
   };
@@ -66,9 +65,9 @@ export class PinyinService {
     if (tone === -1) {
       return '';
     }
-    console.log('tone = '+letter + ',' + tone + ',' + sm + ',' + ym);
+    console.log('tone = ' + letter + ',' + tone + ',' + sm + ',' + ym);
 
-    if(letter === 'v' && (ym.substr(0, 1) === 'v' && (sm === 'j' || sm === 'q' || sm === 'x' || sm === 'y'))){
+    if (letter === 'v' && (ym.substr(0, 1) === 'v' && (sm === 'j' || sm === 'q' || sm === 'x' || sm === 'y'))) {
       return PinyinService.YunMuCodeHTML['u'][tone];
     } else {
       return PinyinService.YunMuCodeHTML[letter][tone];
@@ -77,9 +76,9 @@ export class PinyinService {
 
   static GetPinYinYunMuPosition(word) {
     let ret = -1;
-    for(let i = 0; i < PinyinService.YunMu.length; i++){
+    for (let i = 0; i < PinyinService.YunMu.length; i++) {
       ret = word.indexOf(PinyinService.YunMu[i][0]);
-      if(ret >= 0){
+      if (ret >= 0) {
         break;
       }
     }
@@ -89,9 +88,9 @@ export class PinyinService {
   static GetPinYinTonePosition(word) {
     let ret = -1;
     // see if 拼音＝＝韵母
-    for(let i = 0; i < PinyinService.YunMu.length; i++){
-      let p = word.indexOf(PinyinService.YunMu[i][0]);
-      if(p >= 0){
+    for (let i = 0; i < PinyinService.YunMu.length; i++) {
+      const p = word.indexOf(PinyinService.YunMu[i][0]);
+      if (p >= 0) {
         ret = p + Number(PinyinService.YunMu[i][1]);
         break;
       }
@@ -100,10 +99,10 @@ export class PinyinService {
   }
 
   static GetPinYinToneLetter(word) {
-    let p = PinyinService.GetPinYinTonePosition(word);
+    const p = PinyinService.GetPinYinTonePosition(word);
     let letter = '';
-    if( p !== -1){
-      letter = word.substr(p-1, 1);
+    if (p !== -1) {
+      letter = word.substr(p - 1, 1);
     }
     return(letter);
   }
@@ -150,21 +149,20 @@ export class PinyinService {
    *   ]
    */
   static buildPinYin(options) {
-    let py = options.pinyin,
+    const py = options.pinyin,
       tone = options.tone,
       ymp = this.GetPinYinYunMuPosition(py),
       sm = py.substring(0, ymp),
       ym = py.substring(ymp, py.length),
       tp = this.GetPinYinTonePosition(py),
-      c = py.substr(tp-1, 1),
+      c = py.substr(tp - 1, 1),
       wc = this.GetPinYinToneLetter(py),
-      wct = tone === 0 ? (wc === 'v' ? 'ü' : wc) : this.getYunMuLetter(wc, tone-1, sm, ym),
-      pyCollection = [],
-      i;
+      wct = tone === 0 ? (wc === 'v' ? 'ü' : wc) : this.getYunMuLetter(wc, tone - 1, sm, ym),
+      pyCollection = [];
 
-    for (i = 0; i < py.length; i++) {
-      let lt = py.substr(i, 1);
-      if (i < ymp){
+    for (let i = 0; i < py.length; i++) {
+      const lt = py.substr(i, 1);
+      if (i < ymp) {
         pyCollection.push({
           'letter': lt,
           'size': options.size,
@@ -175,7 +173,7 @@ export class PinyinService {
           'marginTop': options.marginTop
         });
       } else {
-        if (i === tp-1) {
+        if (i === tp - 1) {
           pyCollection.push({
             'letter': wct,
             'size': options.size,

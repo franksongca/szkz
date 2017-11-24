@@ -18,7 +18,7 @@ export class AppComponent {
     stroke: 'gray',
     fill: 'lightyellow',
     thickness: 1
-  }
+  };
 
   testing = true;
 

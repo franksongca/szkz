@@ -15,9 +15,18 @@ export class AppComponent {
     backgroundColor: 'lightyellow'
   };
   stylesSettings = {
-    stroke: 'gray',
+    stroke: 'green',
     fill: 'lightyellow',
-    thickness: 1
+    thickness: 1,
+    grid: {
+      dot: [2, 1],
+      dottedLineColor: {
+        r: 255,
+        g: 0,
+        b: 0,
+        a: 0.5
+      }
+    }
   };
 
   testing = true;

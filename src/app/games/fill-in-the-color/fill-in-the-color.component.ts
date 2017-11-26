@@ -25,8 +25,12 @@ export class FillInTheColorComponent implements OnInit, AfterViewInit {
 
     this.shapesService.drawCircle(this.stylesSettings, {x: 15, y: 15, r: 15});
     this.shapesService.drawSquare(this.stylesSettings, {x: 25, y: 25, w: 20});
-    this.shapesService.drawRect(this.stylesSettings, {x: 50, y: 50, w: 20, h: 10});
+    // this.shapesService.drawRect(this.stylesSettings, {x: 50, y: 50, w: 50, h: 50});
 
+    this.shapesService.createGridSquare(this.stylesSettings, {x: 50, y: 50, w: 50, h: 50});
+
+
+    this.shapesService.drawChineseText({text: '三字经：人之初，性本善', fontSize: 25, fontFamily: '楷体', color: 'green', pos: {x: 35, y: 35}});
 
     // var stage = new createjs.Stage("gamecanvas");
     // var circle = new createjs.Shape();

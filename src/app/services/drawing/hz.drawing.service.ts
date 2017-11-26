@@ -4,7 +4,9 @@ import * as createjs from 'createjs-module';
 import { ShapesService } from '../../services/drawing/shapes.service';
 
 @Injectable()
-export class HzService extends createjs.Container {
+export class HzDrawingService extends createjs.Container {
+  bgGridObj;
+  ziObj;
 
   constructor() {
     super();
@@ -19,14 +21,14 @@ export class HzService extends createjs.Container {
       }
     };
 
-    const bgGridObj = ShapesService.createGridSquare(config.drawingSettings, shapeSettings);
-    const ziObj = ShapesService.createText(hzText, {
+    this.bgGridObj = ShapesService.createGridSquare(config.drawingSettings, shapeSettings);
+    this.ziObj = ShapesService.createText(hzText, {
       pos: {x: config.drawingSettings.hzPadding, y: config.drawingSettings.hzPadding},
       fontSize: config.size.w - config.drawingSettings.hzPadding * 2,
       color: config.font.color, fontFamily: config.font.fontFamily});
 
-    this.addChild(bgGridObj);
-    this.addChild(ziObj);
+    this.addChild(this.bgGridObj);
+    this.addChild(this.ziObj);
   }
 
 }

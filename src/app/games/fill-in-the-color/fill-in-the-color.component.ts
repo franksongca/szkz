@@ -1,7 +1,9 @@
 /// <reference path="../../../../node_modules/createjs-module/createjs.d.ts" />
 import { Component, OnInit, Input, AfterViewInit, EventEmitter } from '@angular/core';
-import { ShapesService } from '../../services/drawing/shapes.service';
-import { HzService } from '../../services/drawing/hz.service';
+import { ShapesService } from './../../services/drawing/shapes.service';
+import { HzDrawingService } from './../../services/drawing/hz.drawing.service';
+import { PinyinDrawingService } from './../../services/drawing/pinyin.drawing.service';
+import { PinyinService } from './../../services/sz/pinyin.service';
 import * as createjs from 'createjs-module';
 
 @Component({
@@ -24,22 +26,53 @@ export class FillInTheColorComponent implements OnInit, AfterViewInit {
     // TODO -- start drawing
     const stage = new createjs.Stage('gamecanvas');
 
-    const shape1 = ShapesService.createCircle(this.stylesSettings, {pos: {x: 15, y: 15}, r: 15});
-    const shape2 = ShapesService.createSquare(this.stylesSettings, {pos: {x: 25, y: 25}, size: {w: 20}});
+    // const shape1 = ShapesService.createCircle(this.stylesSettings, {pos: {x: 15, y: 15}, r: 15});
+    // const shape2 = ShapesService.createSquare(this.stylesSettings, {pos: {x: 25, y: 25}, size: {w: 20}});
     // this.shapesService.drawRect(this.stylesSettings, {x: 50, y: 50, w: 50, h: 50});
 
     // const shape3 = ShapesService.createGridSquare(this.stylesSettings, {pos: {x: 50, y: 50}, size: {w: 50, h: 50}});
 
-    stage.addChild(shape1);
-    stage.update();
+    // stage.addChild(shape1);
+    // stage.update();
 
-    const hz = new HzService();
-    hz.createHz('人', {size: {w: 50}, font: {color: 'red', fontFamily: '楷体'}, drawingSettings: this.stylesSettings});
+    const hz = new HzDrawingService();
+    hz.createHz('人', {size: {w: this.stylesSettings.width}, font: {color: this.stylesSettings.hzColor, fontFamily: '楷体'}, drawingSettings: this.stylesSettings});
 
     hz.x = 100;
     hz.y = 100;
     stage.addChild(hz);
     stage.update();
+
+
+    // const lines = ShapesService.createPinyinLines({
+    //   lineDist: 8,
+    //   stroke: 'black',
+    //   thickness: 0.2,
+    //   size: {w: 50}
+    // });
+    // lines.x = 100;
+    // lines.y = 64;
+    // stage.addChild(lines);
+    // stage.update();
+
+    const pinyinDrawing = new PinyinDrawingService();
+
+    const py = PinyinService.buildPinYin({
+      pinyin: 'zhong',
+      tone: 3,
+      shengMuColor: this.stylesSettings.pinyinOptions.shengMuColor,
+      yunMuColor: this.stylesSettings.pinyinOptions.yunMuColor
+    });
+
+    pinyinDrawing.createPinyin(py, this.stylesSettings.pinyinOptions);
+
+    pinyinDrawing.x = 100;
+    pinyinDrawing.y = 35;
+
+    stage.addChild(pinyinDrawing);
+    stage.update();
+
+
 
     // this.shapesService.drawChineseText({text: '三字经：人之初，性本善', fontSize: 25, fontFamily: '楷体', color: 'green', pos: {x: 35, y: 35}});
 

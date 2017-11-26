@@ -23,7 +23,7 @@ export class ShapesService {
     const gridSquare = new createjs.Shape();
 
     gridSquare.graphics.setStrokeStyle(drwaingSettings.thickness)
-      .beginStroke(ShapesService.getRGB(drwaingSettings.stroke))
+      .beginStroke(ShapesService.getRGB(drwaingSettings.hzBoxBorder))
       .beginFill(ShapesService.getRGB(drwaingSettings.fill))
       .drawRect(shapeSettings.pos.x, shapeSettings.pos.y, shapeSettings.size.w, shapeSettings.size.w);
 
@@ -59,12 +59,27 @@ export class ShapesService {
     return rect;
   }
 
-  static createText(text, config) {
+  static createText(text: string, config: any) {
     const t = new createjs.Text(text, config.fontSize + 'px ' + config.fontFamily, config.color);
     t.x = config.pos ? config.pos.x : 0;
     t.y = config.pos ? config.pos.y : 0;
 
     return t;
+  }
+
+  static createPinyinLines(linesConfig) {
+    const lines = new createjs.Shape();
+    let line = 0;
+
+    lines.graphics.beginStroke(ShapesService.getRGB(linesConfig.stroke));
+    lines.graphics.setStrokeStyle(linesConfig.thickness);
+    while (line < 4) {
+      lines.graphics.moveTo(0, line * linesConfig.lineDist);
+      lines.graphics.lineTo(linesConfig.size.w, line * linesConfig.lineDist);
+      line ++;
+    }
+
+    return lines;
   }
 
 

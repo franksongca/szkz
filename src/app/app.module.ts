@@ -7,13 +7,13 @@ import { CommonService } from './services/common.service'
 import { ServicesManagerService } from './services/services-manager.service';
 
 import { ShapesService } from './services/drawing/shapes.service';
-import { HzService } from './services/drawing/hz.service';
-
+import { HzDrawingService } from './services/drawing/hz.drawing.service';
+import { PinyinDrawingService } from './services/drawing/pinyin.drawing.service';
 
 
 import { ArticleListService } from './services/sz/article-list.service';
 import { ArticleService } from './services/sz/article.service';
-
+import { PinyinService } from './services/sz/pinyin.service';
 import { AppComponent } from './app.component';
 import { FillInTheColorComponent } from './games/fill-in-the-color/fill-in-the-color.component';
 
@@ -30,9 +30,11 @@ import { FillInTheColorComponent } from './games/fill-in-the-color/fill-in-the-c
     CommonService,
     ServicesManagerService,
     ShapesService,
-    HzService,
+    HzDrawingService,
+    PinyinDrawingService,
     ArticleListService,
-    ArticleService
+    ArticleService,
+    PinyinService
   ],
   entryComponents: [
   ],

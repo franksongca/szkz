@@ -15,9 +15,11 @@ export class AppComponent {
     backgroundColor: 'lightyellow'
   };
   stylesSettings = {
-    stroke: 'green',
-    fill: 'lightyellow',
+    width: 100,
+    hzBoxBorder: 'red',
+    fill: 'yellow',
     thickness: 1,
+    hzColor: 'blue',
     grid: {
       dot: [2, 1],
       dottedLineColor: {
@@ -27,7 +29,18 @@ export class AppComponent {
         a: 0.5
       }
     },
-    hzPadding: 3
+    hzPadding: 3,
+    pinyinOptions: {
+      thickness: 0.3,
+      top: 4,
+      lineDist: 14,
+      fontSize: 26,
+      stroke: 'black',
+      shengMuColor: 'red',
+      yunMuColor: 'green',
+      fontFamily: 'Arial',
+      size: {w: 100}
+    }
   };
 
   testing = true;

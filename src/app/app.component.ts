@@ -26,7 +26,8 @@ export class AppComponent {
         b: 0,
         a: 0.5
       }
-    }
+    },
+    hzPadding: 3
   };
 
   testing = true;
@@ -35,7 +36,7 @@ export class AppComponent {
     ArticleListService.loadArticleList().subscribe((response) => {
       // test article-list.service
       if (this.testing) {
-        alert(ArticleListService.getAppName());
+        // alert(ArticleListService.getAppName());
 
         this.articleService.loadArticle('kj-SZJ');
       }

@@ -6,7 +6,9 @@ import { HttpModule } from '@angular/http';
 import { CommonService } from './services/common.service'
 import { ServicesManagerService } from './services/services-manager.service';
 
-import { ShapesService } from './services/shapes.service';
+import { ShapesService } from './services/drawing/shapes.service';
+import { HzService } from './services/drawing/hz.service';
+
 
 
 import { ArticleListService } from './services/sz/article-list.service';
@@ -28,6 +30,7 @@ import { FillInTheColorComponent } from './games/fill-in-the-color/fill-in-the-c
     CommonService,
     ServicesManagerService,
     ShapesService,
+    HzService,
     ArticleListService,
     ArticleService
   ],

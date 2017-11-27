@@ -1,7 +1,7 @@
 /// <reference path="../../../../node_modules/createjs-module/createjs.d.ts" />
 import { Component, OnInit, Input, AfterViewInit, EventEmitter } from '@angular/core';
 import { ShapesService } from './../../services/drawing/shapes.service';
-import { HzDrawingService } from './../../services/drawing/hz.drawing.service';
+import { ZiDrawingService } from '../../services/drawing/zi.drawing.service';
 import { PinyinDrawingService } from './../../services/drawing/pinyin.drawing.service';
 import { PinyinService } from './../../services/sz/pinyin.service';
 import * as createjs from 'createjs-module';
@@ -35,42 +35,42 @@ export class FillInTheColorComponent implements OnInit, AfterViewInit {
     // stage.addChild(shape1);
     // stage.update();
 
-    const hz = new HzDrawingService();
-    hz.createHz('人', {size: {w: this.stylesSettings.width}, font: {color: this.stylesSettings.hzColor, fontFamily: '楷体'}, drawingSettings: this.stylesSettings});
-
-    hz.x = 100;
-    hz.y = 100;
-    stage.addChild(hz);
-    stage.update();
-
-
-    // const lines = ShapesService.createPinyinLines({
-    //   lineDist: 8,
-    //   stroke: 'black',
-    //   thickness: 0.2,
-    //   size: {w: 50}
-    // });
-    // lines.x = 100;
-    // lines.y = 64;
-    // stage.addChild(lines);
+    // const hz = new ZiDrawingService();
+    // hz.createHz('人', {size: {w: this.stylesSettings.width}, font: {color: this.stylesSettings.hzColor, fontFamily: '楷体'}, drawingSettings: this.stylesSettings});
+    //
+    // hz.x = 100;
+    // hz.y = 100;
+    // stage.addChild(hz);
     // stage.update();
-
-    const pinyinDrawing = new PinyinDrawingService();
-
-    const py = PinyinService.buildPinYin({
-      pinyin: 'zhong',
-      tone: 3,
-      shengMuColor: this.stylesSettings.pinyinOptions.shengMuColor,
-      yunMuColor: this.stylesSettings.pinyinOptions.yunMuColor
-    });
-
-    pinyinDrawing.createPinyin(py, this.stylesSettings.pinyinOptions);
-
-    pinyinDrawing.x = 100;
-    pinyinDrawing.y = 35;
-
-    stage.addChild(pinyinDrawing);
-    stage.update();
+    //
+    //
+    // // const lines = ShapesService.createPinyinLines({
+    // //   lineDist: 8,
+    // //   stroke: 'black',
+    // //   thickness: 0.2,
+    // //   size: {w: 50}
+    // // });
+    // // lines.x = 100;
+    // // lines.y = 64;
+    // // stage.addChild(lines);
+    // // stage.update();
+    //
+    // const pinyinDrawing = new PinyinDrawingService();
+    //
+    // const py = PinyinService.buildPinYin({
+    //   pinyin: 'zhong',
+    //   tone: 3,
+    //   shengMuColor: this.stylesSettings.pinyinOptions.shengMuColor,
+    //   yunMuColor: this.stylesSettings.pinyinOptions.yunMuColor
+    // });
+    //
+    // pinyinDrawing.createPinyin(py, this.stylesSettings.pinyinOptions);
+    //
+    // pinyinDrawing.x = 100;
+    // pinyinDrawing.y = 35;
+    //
+    // stage.addChild(pinyinDrawing);
+    // stage.update();
 
 
 

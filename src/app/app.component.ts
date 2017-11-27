@@ -15,6 +15,7 @@ export class AppComponent {
     backgroundColor: 'lightyellow'
   };
   stylesSettings = {
+    fontFamily: '楷体',
     width: 100,
     hzBoxBorder: 'red',
     fill: 'yellow',

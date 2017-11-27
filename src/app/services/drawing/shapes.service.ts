@@ -22,13 +22,13 @@ export class ShapesService {
   static createGridSquare(drwaingSettings, shapeSettings) {
     const gridSquare = new createjs.Shape();
 
-    gridSquare.graphics.setStrokeStyle(drwaingSettings.thickness)
-      .beginStroke(ShapesService.getRGB(drwaingSettings.hzBoxBorder))
-      .beginFill(ShapesService.getRGB(drwaingSettings.fill))
+    gridSquare.graphics.setStrokeStyle(drwaingSettings.zi.grid.thickness)
+      .beginStroke(ShapesService.getRGB(drwaingSettings.zi.grid.hzBoxBorder))
+      .beginFill(ShapesService.getRGB(drwaingSettings.zi.grid.fill))
       .drawRect(shapeSettings.pos.x, shapeSettings.pos.y, shapeSettings.size.w, shapeSettings.size.w);
 
-    gridSquare.graphics.setStrokeDash(drwaingSettings.grid.dot);
-    gridSquare.graphics.beginStroke(ShapesService.getRGB(drwaingSettings.grid.dottedLineColor));
+    gridSquare.graphics.setStrokeDash(drwaingSettings.zi.grid.dot);
+    gridSquare.graphics.beginStroke(ShapesService.getRGB(drwaingSettings.zi.grid.dottedLineColor));
     gridSquare.graphics.moveTo(shapeSettings.pos.x, shapeSettings.pos.y + shapeSettings.size.w / 2);
     gridSquare.graphics.lineTo(shapeSettings.pos.x + shapeSettings.size.w, shapeSettings.pos.y + shapeSettings.size.w / 2);
     gridSquare.graphics.moveTo(shapeSettings.pos.x + shapeSettings.size.w / 2, shapeSettings.pos.y);

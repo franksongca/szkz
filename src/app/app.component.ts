@@ -15,22 +15,27 @@ export class AppComponent {
     backgroundColor: 'lightyellow'
   };
   stylesSettings = {
-    fontFamily: '楷体',
-    width: 100,
-    hzBoxBorder: 'red',
-    fill: 'yellow',
-    thickness: 1,
-    hzColor: 'blue',
-    grid: {
-      dot: [2, 1],
-      dottedLineColor: {
-        r: 255,
-        g: 0,
-        b: 0,
-        a: 0.5
-      }
+    zi : {
+      errorFlashing: ['red', 'white'],
+      successFlashing: ['green', 'white'],
+      normalFlashing: ['yellow', 'blue'],
+      width: 100,
+      fontFamily: '楷体',
+      hzColor: 'blue',
+      hzPadding: 3,
+      grid: {
+        thickness: 1,
+        hzBoxBorder: 'red',
+        fill: 'yellow',
+        dot: [2, 1],
+        dottedLineColor: {
+          r: 255,
+          g: 0,
+          b: 0,
+          a: 0.5
+        }
+      },
     },
-    hzPadding: 3,
     pinyinOptions: {
       marginTop: 10,
       thickness: 0.3,

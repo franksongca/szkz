@@ -65,7 +65,7 @@ export class PinyinService {
     if (tone === -1) {
       return '';
     }
-    console.log('tone = ' + letter + ',' + tone + ',' + sm + ',' + ym);
+    // console.log('tone = ' + letter + ',' + tone + ',' + sm + ',' + ym);
 
     if (letter === 'v' && (ym.substr(0, 1) === 'v' && (sm === 'j' || sm === 'q' || sm === 'x' || sm === 'y'))) {
       return PinyinService.YunMuCodeHTML['u'][tone];

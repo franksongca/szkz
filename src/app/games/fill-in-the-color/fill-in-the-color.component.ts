@@ -27,8 +27,12 @@ export class FillInTheColorComponent implements OnInit, AfterViewInit {
     // TODO -- start drawing
     const stage = new createjs.Stage('gamecanvas');
 
-    let hz = {"hanZi":"人","shengDiao":"2","pinYin":"ren","characterIndex":"character-1","ori_id":"649","mistakes":"0","times":"0","index":"0","pinyinObj":[{"letter":"r","color":"blue","type":"s","originalLetter":"r","read":"r"},{"letter":"é","color":"#990000","type":"yt","originalLetter":"e","read":"en"},{"letter":"n","color":"#990000","type":"y","originalLetter":"n","read":"en"}]};
-    let hzDrawing = new HanziDrawingService();
+    const hz = {'hanZi': '人', 'shengDiao': '2', 'pinYin': 'ren', 'characterIndex': 'character-1', 'ori_id': '649', 'mistakes': '0', 'times': '0', 'index': '0',
+      'pinyinObj': [{'letter': 'r', 'color': 'blue', 'type': 's', 'originalLetter': 'r', 'read': 'r'},
+        {'letter': 'é', 'color': '#990000', 'type': 'yt', 'originalLetter': 'e', 'read': 'en'},
+        {'letter': 'n', 'color': '#990000', 'type': 'y', 'originalLetter': 'n', 'read': 'en'}]};
+    const hzDrawing = new HanziDrawingService();
+
     hzDrawing.createHanzi(hz, this.stylesSettings);
     stage.addChild(hzDrawing);
     stage.update();
@@ -42,7 +46,7 @@ export class FillInTheColorComponent implements OnInit, AfterViewInit {
     // }, 1000);
 
 
-    hzDrawing.ziColorFlicking(stage, ['blue', 'white'], 20, 3);
+    hzDrawing.ziColorFlicking(stage, ['blue', 'white'], 20, 23);
 
     // const shape1 = ShapesService.createCircle(this.stylesSettings, {pos: {x: 15, y: 15}, r: 15});
     // const shape2 = ShapesService.createSquare(this.stylesSettings, {pos: {x: 25, y: 25}, size: {w: 20}});

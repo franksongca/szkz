@@ -25,12 +25,13 @@ export class HanziDrawingService extends createjs.Container  {
     this.ziObj = new ZiDrawingService();
     this.ziObj.createHz(this.character.hanZi, this.stylesSettings);
 
-    this.ziObj.x = 0;
+    this.ziObj.x = 1;
     this.ziObj.y = this.stylesSettings.pinyinOptions.lineDist * 3 + this.stylesSettings.pinyinOptions.marginTop;
 
     this.pinyinObj = new PinyinDrawingService();
     this.pinyinObj.createPinyin(this.character.pinyinObj, this.stylesSettings.pinyinOptions);
-
+    this.pinyinObj.x = 1;
+    this.pinyinObj.y = 1;
     this.addChild(this.pinyinObj);
     this.addChild(this.ziObj);
   }
@@ -50,8 +51,8 @@ export class HanziDrawingService extends createjs.Container  {
   ziColorFlicking(stage, colors, times, interval, callback?) {
     let cIndex = 0, indexColor = 0, intervalIndex = 0, animationFrame;
 
-    let flicking = () => {
-      let c = colors[indexColor];
+    const flicking = () => {
+      const c = colors[indexColor];
       this.changeZiColor(c);
       stage.update();
 
@@ -65,7 +66,7 @@ export class HanziDrawingService extends createjs.Container  {
           return;
         }
         intervalIndex = 0;
-        if (indexColor++ > colors.length - 1) {
+        if (++indexColor > colors.length - 1) {
           indexColor = 0;
         }
       }

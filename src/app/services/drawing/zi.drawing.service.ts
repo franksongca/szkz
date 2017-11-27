@@ -18,17 +18,17 @@ export class ZiDrawingService extends createjs.Container {
     const shapeSettings = {
       pos: {x: 0, y: 0},
       size: {
-        w: this.stylesSettings.width,
-        h: this.stylesSettings.width
+        w: this.stylesSettings.zi.width,
+        h: this.stylesSettings.zi.width
       }
     };
 
     this.bgGridObj = ShapesService.createGridSquare(this.stylesSettings, shapeSettings);
     this.ziObj = ShapesService.createText(hzText, {
-      pos: {x: this.stylesSettings.hzPadding, y: this.stylesSettings.hzPadding},
-      fontSize: this.stylesSettings.width - this.stylesSettings.hzPadding * 2,
-      color: this.stylesSettings.hzColor,
-      fontFamily: this.stylesSettings.fontFamily
+      pos: {x: this.stylesSettings.zi.hzPadding, y: this.stylesSettings.zi.hzPadding},
+      fontSize: this.stylesSettings.zi.width - this.stylesSettings.zi.hzPadding * 2,
+      color: this.stylesSettings.zi.hzColor,
+      fontFamily: this.stylesSettings.zi.fontFamily
     });
 
     this.addChild(this.bgGridObj);
@@ -40,7 +40,7 @@ export class ZiDrawingService extends createjs.Container {
   }
 
   resumeZiColor() {
-    this.changeZiColor(this.stylesSettings.hzColor);
+    this.changeZiColor(this.stylesSettings.zi.hzColor);
   }
 
 }

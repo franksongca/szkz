@@ -1,9 +1,10 @@
 /// <reference path="../../../../node_modules/createjs-module/createjs.d.ts" />
 import { Component, OnInit, Input, AfterViewInit, EventEmitter } from '@angular/core';
-import { ShapesService } from './../../services/drawing/shapes.service';
-import { ZiDrawingService } from '../../services/drawing/zi.drawing.service';
-import { PinyinDrawingService } from './../../services/drawing/pinyin.drawing.service';
-import { PinyinService } from './../../services/sz/pinyin.service';
+// import { ShapesService } from './../../services/drawing/shapes.service';
+// import { ZiDrawingService } from '../../services/drawing/zi.drawing.service';
+// import { PinyinDrawingService } from './../../services/drawing/pinyin.drawing.service';
+// import { PinyinService } from './../../services/sz/pinyin.service';
+import { HanziDrawingService } from './../../services/drawing/hanzi.drawing.service';
 import * as createjs from 'createjs-module';
 
 @Component({
@@ -25,6 +26,13 @@ export class FillInTheColorComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // TODO -- start drawing
     const stage = new createjs.Stage('gamecanvas');
+
+    let hz = {"hanZi":"人","shengDiao":"2","pinYin":"ren","characterIndex":"character-1","ori_id":"649","mistakes":"0","times":"0","index":"0","pinyinObj":[{"letter":"r","color":"blue","type":"s","originalLetter":"r","read":"r"},{"letter":"é","color":"#990000","type":"yt","originalLetter":"e","read":"en"},{"letter":"n","color":"#990000","type":"y","originalLetter":"n","read":"en"}]};
+    let hzDrawing = new HanziDrawingService();
+    hzDrawing.createHanzi(hz, this.stylesSettings);
+    stage.addChild(hzDrawing);
+    stage.update();
+
 
     // const shape1 = ShapesService.createCircle(this.stylesSettings, {pos: {x: 15, y: 15}, r: 15});
     // const shape2 = ShapesService.createSquare(this.stylesSettings, {pos: {x: 25, y: 25}, size: {w: 20}});
@@ -94,6 +102,10 @@ export class FillInTheColorComponent implements OnInit, AfterViewInit {
     //
     // createjs.Ticker.setFPS(60);
     // createjs.Ticker.addEventListener("tick", stage);
+
+
+
+
   }
 
 

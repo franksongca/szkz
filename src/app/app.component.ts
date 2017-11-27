@@ -32,6 +32,7 @@ export class AppComponent {
     },
     hzPadding: 3,
     pinyinOptions: {
+      marginTop: 10,
       thickness: 0.3,
       top: 4,
       lineDist: 14,

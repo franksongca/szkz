@@ -21,7 +21,10 @@ export class HanziDrawingService extends createjs.Container  {
     this.stylesSettings = stylesSettings;
 
     this.ziObj = new ZiDrawingService();
-    this.ziObj.createHz(this.character.hanzi, this.stylesSettings);
+    this.ziObj.createHz(this.character.hanZi, this.stylesSettings);
+
+    this.ziObj.x = 0;
+    this.ziObj.y = this.stylesSettings.pinyinOptions.lineDist * 3 + this.stylesSettings.pinyinOptions.marginTop;
 
     this.pinyinObj = new PinyinDrawingService();
     this.pinyinObj.createPinyin(this.character.pinyinObj, this.stylesSettings.pinyinOptions);

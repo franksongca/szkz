@@ -15,9 +15,32 @@ export class AppComponent {
     backgroundColor: 'lightyellow'
   };
   stylesSettings = {
-    stroke: 'gray',
-    fill: 'lightyellow',
-    thickness: 1
+    width: 100,
+    hzBoxBorder: 'red',
+    fill: 'yellow',
+    thickness: 1,
+    hzColor: 'blue',
+    grid: {
+      dot: [2, 1],
+      dottedLineColor: {
+        r: 255,
+        g: 0,
+        b: 0,
+        a: 0.5
+      }
+    },
+    hzPadding: 3,
+    pinyinOptions: {
+      thickness: 0.3,
+      top: 4,
+      lineDist: 14,
+      fontSize: 26,
+      stroke: 'black',
+      shengMuColor: 'red',
+      yunMuColor: 'green',
+      fontFamily: 'Arial',
+      size: {w: 100}
+    }
   };
 
   testing = true;
@@ -26,7 +49,7 @@ export class AppComponent {
     ArticleListService.loadArticleList().subscribe((response) => {
       // test article-list.service
       if (this.testing) {
-        alert(ArticleListService.getAppName());
+        // alert(ArticleListService.getAppName());
 
         this.articleService.loadArticle('kj-SZJ');
       }

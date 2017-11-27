@@ -33,6 +33,16 @@ export class FillInTheColorComponent implements OnInit, AfterViewInit {
     stage.addChild(hzDrawing);
     stage.update();
 
+    // window.setTimeout(() => {
+    //   hzDrawing.changeZiColor('red');
+    //   //hzDrawing.changeShengMuColor('black');
+    //   //hzDrawing.changeYunMuColor('black');
+    //
+    //   stage.update();
+    // }, 1000);
+
+
+    hzDrawing.ziColorFlicking(stage, ['blue', 'white'], 20, 3);
 
     // const shape1 = ShapesService.createCircle(this.stylesSettings, {pos: {x: 15, y: 15}, r: 15});
     // const shape2 = ShapesService.createSquare(this.stylesSettings, {pos: {x: 25, y: 25}, size: {w: 20}});

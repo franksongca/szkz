@@ -35,4 +35,12 @@ export class ZiDrawingService extends createjs.Container {
     this.addChild(this.ziObj);
   }
 
+  changeZiColor(color) {
+    this.ziObj.color = color;
+  }
+
+  resumeZiColor() {
+    this.changeZiColor(this.stylesSettings.hzColor);
+  }
+
 }

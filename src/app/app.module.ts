@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 
 
 import { CommonService } from './services/common.service'
-import { ServicesManagerService } from './services/services-manager.service';
+import { DeviceTimerService } from './services/device-timer.service';
 
 import { ShapesService } from './services/drawing/shapes.service';
 import { ZiDrawingService } from './services/drawing/zi.drawing.service';
@@ -28,7 +28,7 @@ import { FillInTheColorComponent } from './games/fill-in-the-color/fill-in-the-c
   ],
   providers: [
     CommonService,
-    ServicesManagerService,
+    DeviceTimerService,
     ShapesService,
     ZiDrawingService,
     PinyinDrawingService,

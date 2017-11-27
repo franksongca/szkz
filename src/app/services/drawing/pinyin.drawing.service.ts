@@ -6,7 +6,7 @@ import { ShapesService } from '../../services/drawing/shapes.service';
 export class PinyinDrawingService extends createjs.Container {
   lines;
   letters;
-  lettersObj;
+  pinyinConfig;
 
   constructor() {
     super();
@@ -14,28 +14,47 @@ export class PinyinDrawingService extends createjs.Container {
 
   createPinyin(pinyinInfo, pinyinConfig) {
     // let lettersNum = pinyinInfo.length;
-
+    this.pinyinConfig = pinyinConfig;
     this.letters = pinyinInfo;
     this.lines = ShapesService.createPinyinLines(pinyinConfig);
 
     this.addChild(this.lines);
-    this.lettersObj = [];
 
     const margin = (pinyinConfig.size.w - this.letters.length * pinyinConfig.lineDist) / 2;
     this.letters.forEach((l, index) => {
       const py = ShapesService.createText(l.letter, {
-        color: l.color,
+        color: l.type === 's' ? pinyinConfig.shengMuColor : pinyinConfig.yunMuColor,
         fontSize: pinyinConfig.fontSize,
         fontFamily: pinyinConfig.fontFamily,
         pos: {x: margin + index * pinyinConfig.lineDist, y: pinyinConfig.top}
       });
-      this.lettersObj.push(py);
+      l.letterObj  = py;
       this.addChild(py);
     });
-
-
-
   }
 
+  changeShengMuColor(color) {
+    this.letters.forEach((l) => {
+      if (l.type === 's') {
+        l.letterObj.color = color;
+      }
+    });
+  }
+
+  changeYunMuColor(color) {
+    this.letters.forEach((l) => {
+      if (l.type === 'y' || l.type === 'yt') {
+        l.letterObj.color = color;
+      }
+    });
+  }
+
+  resumeShengMuColor() {
+    this.changeShengMuColor(this.pinyinConfig.shengMuColor);
+  }
+
+  resumeYunMuColor() {
+    this.changeYunMuColor(this.pinyinConfig.yunMuColor);
+  }
 
 }

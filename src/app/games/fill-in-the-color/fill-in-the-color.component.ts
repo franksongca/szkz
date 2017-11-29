@@ -46,7 +46,7 @@ export class FillInTheColorComponent implements OnInit, AfterViewInit {
     // }, 1000);
 
 
-    hzDrawing.ziColorFlicking(stage, ['blue', 'white'], 20, 20);
+    hzDrawing.ziColorFlicking(stage, ['purple', 'white', 'darkred'], 20, 20);
 
     // const shape1 = ShapesService.createCircle(this.stylesSettings, {pos: {x: 15, y: 15}, r: 15});
     // const shape2 = ShapesService.createSquare(this.stylesSettings, {pos: {x: 25, y: 25}, size: {w: 20}});

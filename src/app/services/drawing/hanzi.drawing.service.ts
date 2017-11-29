@@ -80,37 +80,4 @@ export class HanziDrawingService extends createjs.Container  {
 
     DeviceTimerService.register(process);
   }
-
-
-
-
-  // ziColorFlicking(stage, colors, times, interval, callback?) {
-  //   let cIndex = 0, indexColor = 0, intervalIndex = 0, animationFrame;
-  //
-  //   const flicking = () => {
-  //     const c = colors[indexColor];
-  //     this.changeZiColor(c);
-  //     stage.update();
-  //
-  //     if (intervalIndex++ > interval) {
-  //       if (cIndex++ > times) {
-  //         this.ziObj.resumeZiColor();
-  //         stage.update();
-  //         if (callback) {
-  //           callback();
-  //         }
-  //         return;
-  //       }
-  //       intervalIndex = 0;
-  //       if (++indexColor > colors.length - 1) {
-  //         indexColor = 0;
-  //       }
-  //     }
-  //
-  //     animationFrame = DeviceTimerService.requestAnimationFrame(flicking);
-  //   };
-  //   animationFrame = DeviceTimerService.requestAnimationFrame(flicking);
-  // }
-
-
 }

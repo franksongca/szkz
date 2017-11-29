@@ -8,4 +8,12 @@ export class CommonService {
   static clone(srcObj) {
     return JSON.parse(JSON.stringify(srcObj));
   }
+
+  static getTimestamp() {
+    if (!Date.now) {
+      Date.now = function() { return new Date().getTime(); }
+    }
+
+    return Date.now();
+  }
 }

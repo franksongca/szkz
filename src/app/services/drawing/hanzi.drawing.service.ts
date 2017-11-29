@@ -1,7 +1,7 @@
 /// <reference path="../../../../node_modules/createjs-module/createjs.d.ts" />
 import { Injectable } from '@angular/core';
 import * as createjs from 'createjs-module';
-import { DeviceTimerService } from './../../services/device-timer.service';
+import { ProcessInterface, DeviceTimerService } from './../../services/device-timer.service';
 import { ZiDrawingService } from './../../services/drawing/zi.drawing.service';
 import { PinyinDrawingService } from './../../services/drawing/pinyin.drawing.service';
 
@@ -48,33 +48,69 @@ export class HanziDrawingService extends createjs.Container  {
     this.pinyinObj.changeYunMuColor(color);
   }
 
-  ziColorFlicking(stage, colors, times, interval, callback?) {
-    let cIndex = 0, indexColor = 0, intervalIndex = 0, animationFrame;
+  resumeZiColor() {
+    this.ziObj.resumeZiColor();
+  }
 
-    const flicking = () => {
+  ziColorFlicking(stage, colors, times, interval, callback?) {
+    let indexColor = 0;
+
+    let flicking: Function = () => {
       const c = colors[indexColor];
       this.changeZiColor(c);
       stage.update();
-
-      if (intervalIndex++ > interval) {
-        if (cIndex++ > times) {
-          this.ziObj.resumeZiColor();
-          stage.update();
-          if (callback) {
-            callback();
-          }
-          return;
-        }
-        intervalIndex = 0;
-        if (++indexColor > colors.length - 1) {
-          indexColor = 0;
-        }
+      if (++indexColor > colors.length - 1) {
+        indexColor = 0;
       }
-
-      animationFrame = DeviceTimerService.requestAnimationFrame(flicking);
     };
-    animationFrame = DeviceTimerService.requestAnimationFrame(flicking);
+
+    let complete: Function = () => {
+      this.resumeZiColor();
+      if (callback) {
+        callback();
+      }
+    }
+
+    const process: ProcessInterface = {
+      renderFunc: flicking,
+      completeFunc: complete,
+      totalLoops: times,
+      interval: interval
+    };
+
+    DeviceTimerService.register(process);
   }
+
+
+
+
+  // ziColorFlicking(stage, colors, times, interval, callback?) {
+  //   let cIndex = 0, indexColor = 0, intervalIndex = 0, animationFrame;
+  //
+  //   const flicking = () => {
+  //     const c = colors[indexColor];
+  //     this.changeZiColor(c);
+  //     stage.update();
+  //
+  //     if (intervalIndex++ > interval) {
+  //       if (cIndex++ > times) {
+  //         this.ziObj.resumeZiColor();
+  //         stage.update();
+  //         if (callback) {
+  //           callback();
+  //         }
+  //         return;
+  //       }
+  //       intervalIndex = 0;
+  //       if (++indexColor > colors.length - 1) {
+  //         indexColor = 0;
+  //       }
+  //     }
+  //
+  //     animationFrame = DeviceTimerService.requestAnimationFrame(flicking);
+  //   };
+  //   animationFrame = DeviceTimerService.requestAnimationFrame(flicking);
+  // }
 
 
 }

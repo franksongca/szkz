@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
-import { CommonService } from 'services/common.service'
-@Injectable()
+import { CommonService } from './common.service'
+
 
 export interface ProcessInterface {
-  callee: any,
-  timeStamp: Number,
+  callee?: any,
+  timeStamp?: Number,
   renderFunc: Function,
   completeFunc?: Function,
   totalLoops: Number,  // 0=endless
-  internal: Number,
+  interval: Number,
   indexInterval?: Number,
   indexLoops?: Number,
-  complete: boolean
+  complete?: boolean
 }
 
+@Injectable()
 export class DeviceTimerService {
   static requestAnimationFrame: Function;
   static cancelAnimationFrame: Function;
@@ -48,8 +49,12 @@ export class DeviceTimerService {
 
     processKeys.forEach((key) => {
       let process = DeviceTimerService.processes[key];
-      if (++process.indexInterval < process.interval) {
-        if (!process.TotalLoops || ++process.indexLoops < process.TotalLoops) {
+      process.indexInterval++;
+      if (process.indexInterval > process.interval) {
+        process.indexInterval = 0;
+
+        process.indexLoops++;
+        if (!process.totalLoops || process.indexLoops < process.totalLoops) {
           process.renderFunc.apply(process.callee);
         } else {
           // this process id done, remove from the queue
@@ -58,11 +63,8 @@ export class DeviceTimerService {
             process.completeFunc.apply(process.callee);
           }
         }
-      } else {
-        process.indexInterval = 0;
       }
     });
-
 
     // continue looping
     DeviceTimerService.animationFrame = DeviceTimerService.requestAnimationFrame(DeviceTimerService.deviceTimer);

@@ -37,7 +37,7 @@ export class ArticleService {
       (response) => {
         console.log('load ' + url + ' and parse the data.');
         const oParser = new DOMParser(),
-          oDOM = oParser.parseFromString(response['_body'].toString(), 'text/xml'),
+          oDOM = oParser.parseFromString(response.text(), 'text/xml'),
           pagesAttributes: any = oDOM.firstChild.attributes,
           attrLineSpacing = 'line_spacing',
           attrRowsPerPage = 'rows_per_page',

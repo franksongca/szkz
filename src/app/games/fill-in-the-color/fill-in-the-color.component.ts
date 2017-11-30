@@ -1,5 +1,7 @@
 /// <reference path="../../../../node_modules/createjs-module/createjs.d.ts" />
-import { Component, OnInit, Input, AfterViewInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, OnChanges, EventEmitter } from '@angular/core';
+import { ImageDataService } from './../../services/game/image-data.service';
+
 // import { ShapesService } from './../../services/drawing/shapes.service';
 // import { ZiDrawingService } from '../../services/drawing/zi.drawing.service';
 // import { PinyinDrawingService } from './../../services/drawing/pinyin.drawing.service';
@@ -12,11 +14,17 @@ import * as createjs from 'createjs-module';
   templateUrl: './fill-in-the-color.component.html',
   styleUrls: ['./fill-in-the-color.component.css']
 })
-export class FillInTheColorComponent implements OnInit, AfterViewInit {
+export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() gameSettings: any;
   @Input() stylesSettings: any;
+  @Input() gameCode: string;
 
-  constructor() {
+  static GameType = 'tyts';
+
+  gameImagesInfo;
+
+  constructor(private imageDataService: ImageDataService) {
+    //imageDataService
   }
 
   ngOnInit() {
@@ -122,5 +130,15 @@ export class FillInTheColorComponent implements OnInit, AfterViewInit {
 
   }
 
+  ngOnChanges(changes) {
+    if (changes.gameCode && changes.gameCode.previousValue !== changes.gameCode.currentValue) {
+      this.imageDataService.load(FillInTheColorComponent.GameType, this.gameCode).subscribe(
+        (response) => {
+          this.gameImagesInfo = response;
+        },
+        () => console.log('error occurs when loading images of [' + FillInTheColorComponent.GameType + '][' + this.gameCode + ']')
+      );
+    }
 
+  }
 }

@@ -53,6 +53,8 @@ export class AppComponent {
 
   testing = true;
 
+  gameCode = 'Pic_2';
+
   constructor(private articleListService: ArticleListService, private articleService: ArticleService) {
     DeviceTimerService.init();
 

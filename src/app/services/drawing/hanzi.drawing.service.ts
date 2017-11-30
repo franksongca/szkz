@@ -55,7 +55,7 @@ export class HanziDrawingService extends createjs.Container  {
   ziColorFlicking(stage, colors, times, interval, callback?) {
     let indexColor = 0;
 
-    let flicking: Function = () => {
+    const flicking: Function = () => {
       const c = colors[indexColor];
       this.changeZiColor(c);
       stage.update();
@@ -64,12 +64,13 @@ export class HanziDrawingService extends createjs.Container  {
       }
     };
 
-    let complete: Function = () => {
+    const complete: Function = () => {
       this.resumeZiColor();
+      stage.update();
       if (callback) {
         callback();
       }
-    }
+    };
 
     const process: ProcessInterface = {
       renderFunc: flicking,

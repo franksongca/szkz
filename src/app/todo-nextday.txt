@@ -1,0 +1,4 @@
+1. load image json
+2. loading progress
+3. drawImage
+4. spirate

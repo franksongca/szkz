@@ -12,7 +12,7 @@ export class AppComponent {
   title = 'app';
   gameConfig = {
     w: 800,
-    h: 300,
+    h: 600,
     backgroundColor: 'lightyellow'
   };
   stylesSettings = {

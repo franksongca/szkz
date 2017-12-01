@@ -18,11 +18,14 @@ export class TytsDrawGameService {
         img.x = this.imgs[key].pos.x;
         img.y = this.imgs[key].pos.y;
       }
-      this.stage.addChild(img);
+      //this.stage.addChild(img);
       this.images.push(img);
     });
-    // this.stage.addChild(this.images[10]);
-    // this.stage.addChild(this.images[0]);
+
+    this.images[10].x = 168;
+    this.images[10].y = 358;
+    this.stage.addChild(this.images[10]);
+    this.stage.addChild(this.images[0]);
     this.stage.update();
   }
 }

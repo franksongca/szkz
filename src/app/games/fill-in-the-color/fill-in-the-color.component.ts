@@ -2,7 +2,9 @@
 import { Component, OnInit, Input, AfterViewInit, OnChanges, EventEmitter } from '@angular/core';
 import { ImageDataService } from './../../services/game/image-data.service';
 
-// import { ShapesService } from './../../services/drawing/shapes.service';
+
+import { TytsDrawGameService } from './../../services/game/tyts/tyts-draw-game.service';
+
 // import { ZiDrawingService } from '../../services/drawing/zi.drawing.service';
 // import { PinyinDrawingService } from './../../services/drawing/pinyin.drawing.service';
 // import { PinyinService } from './../../services/sz/pinyin.service';
@@ -15,16 +17,15 @@ import * as createjs from 'createjs-module';
   styleUrls: ['./fill-in-the-color.component.css']
 })
 export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit {
+  static GameType = 'tyts';
   @Input() gameSettings: any;
   @Input() stylesSettings: any;
   @Input() gameCode: string;
 
-  static GameType = 'tyts';
-
+  stage;
   gameImagesInfo;
 
-  constructor(private imageDataService: ImageDataService) {
-    //imageDataService
+  constructor(private imageDataService: ImageDataService, private tytsDrawGameService: TytsDrawGameService) {
   }
 
   ngOnInit() {
@@ -33,8 +34,8 @@ export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit
 
   ngAfterViewInit() {
     // TODO -- start drawing
-    const stage = new createjs.Stage('gamecanvas');
-
+    this.stage = new createjs.Stage('gamecanvas');
+    this.stage.enableMouseOver(10);
     const hz = {'hanZi': '人', 'shengDiao': '2', 'pinYin': 'ren', 'characterIndex': 'character-1', 'ori_id': '649', 'mistakes': '0', 'times': '0', 'index': '0',
       'pinyinObj': [{'letter': 'r', 'color': 'blue', 'type': 's', 'originalLetter': 'r', 'read': 'r'},
         {'letter': 'é', 'color': '#990000', 'type': 'yt', 'originalLetter': 'e', 'read': 'en'},
@@ -42,8 +43,8 @@ export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit
     const hzDrawing = new HanziDrawingService();
 
     hzDrawing.createHanzi(hz, this.stylesSettings);
-    stage.addChild(hzDrawing);
-    stage.update();
+    this.stage.addChild(hzDrawing);
+    this.stage.update();
 
     // window.setTimeout(() => {
     //   hzDrawing.changeZiColor('red');
@@ -54,13 +55,13 @@ export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit
     // }, 1000);
 
 
-    hzDrawing.ziColorFlicking(stage, ['purple', 'white', 'darkred'], 20, 20);
+    hzDrawing.ziColorFlicking(this.stage, ['purple', 'white', 'darkred'], 20, 20);
 
-    // const shape1 = ShapesService.createCircle(this.stylesSettings, {pos: {x: 15, y: 15}, r: 15});
-    // const shape2 = ShapesService.createSquare(this.stylesSettings, {pos: {x: 25, y: 25}, size: {w: 20}});
+    // const shape1 = DrawingService.createCircle(this.stylesSettings, {pos: {x: 15, y: 15}, r: 15});
+    // const shape2 = DrawingService.createSquare(this.stylesSettings, {pos: {x: 25, y: 25}, size: {w: 20}});
     // this.shapesService.drawRect(this.stylesSettings, {x: 50, y: 50, w: 50, h: 50});
 
-    // const shape3 = ShapesService.createGridSquare(this.stylesSettings, {pos: {x: 50, y: 50}, size: {w: 50, h: 50}});
+    // const shape3 = DrawingService.createGridSquare(this.stylesSettings, {pos: {x: 50, y: 50}, size: {w: 50, h: 50}});
 
     // stage.addChild(shape1);
     // stage.update();
@@ -74,7 +75,7 @@ export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit
     // stage.update();
     //
     //
-    // // const lines = ShapesService.createPinyinLines({
+    // // const lines = DrawingService.createPinyinLines({
     // //   lineDist: 8,
     // //   stroke: 'black',
     // //   thickness: 0.2,
@@ -135,10 +136,14 @@ export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit
       this.imageDataService.load(FillInTheColorComponent.GameType, this.gameCode).subscribe(
         (response) => {
           this.gameImagesInfo = response;
+
+          this.tytsDrawGameService = new TytsDrawGameService(this.stage, response, 0.7);
+          this.tytsDrawGameService.drawImages();
         },
         () => console.log('error occurs when loading images of [' + FillInTheColorComponent.GameType + '][' + this.gameCode + ']')
       );
     }
-
   }
+
+
 }

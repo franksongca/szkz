@@ -1,7 +1,7 @@
 /// <reference path="../../../../node_modules/createjs-module/createjs.d.ts" />
 import { Injectable } from '@angular/core';
 import * as createjs from 'createjs-module';
-import { ShapesService } from '../../services/drawing/shapes.service';
+import { DrawingService } from './drawing.service';
 
 @Injectable()
 export class ZiDrawingService extends createjs.Container {
@@ -23,8 +23,8 @@ export class ZiDrawingService extends createjs.Container {
       }
     };
 
-    this.bgGridObj = ShapesService.createGridSquare(this.stylesSettings, shapeSettings);
-    this.ziObj = ShapesService.createText(hzText, {
+    this.bgGridObj = DrawingService.createGridSquare(this.stylesSettings, shapeSettings);
+    this.ziObj = DrawingService.createText(hzText, {
       pos: {x: this.stylesSettings.zi.hzPadding, y: this.stylesSettings.zi.hzPadding},
       fontSize: this.stylesSettings.zi.width - this.stylesSettings.zi.hzPadding * 2,
       color: this.stylesSettings.zi.hzColor,

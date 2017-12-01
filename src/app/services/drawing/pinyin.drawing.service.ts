@@ -1,7 +1,7 @@
 /// <reference path="../../../../node_modules/createjs-module/createjs.d.ts" />
 import { Injectable } from '@angular/core';
 import * as createjs from 'createjs-module';
-import { ShapesService } from '../../services/drawing/shapes.service';
+import { DrawingService } from './drawing.service';
 @Injectable()
 export class PinyinDrawingService extends createjs.Container {
   lines;
@@ -16,13 +16,13 @@ export class PinyinDrawingService extends createjs.Container {
     // let lettersNum = pinyinInfo.length;
     this.pinyinConfig = pinyinConfig;
     this.letters = pinyinInfo;
-    this.lines = ShapesService.createPinyinLines(pinyinConfig);
+    this.lines = DrawingService.createPinyinLines(pinyinConfig);
 
     this.addChild(this.lines);
 
     const margin = (pinyinConfig.size.w - this.letters.length * pinyinConfig.lineDist) / 2;
     this.letters.forEach((l, index) => {
-      const py = ShapesService.createText(l.letter, {
+      const py = DrawingService.createText(l.letter, {
         color: l.type === 's' ? pinyinConfig.shengMuColor : pinyinConfig.yunMuColor,
         fontSize: pinyinConfig.fontSize,
         fontFamily: pinyinConfig.fontFamily,

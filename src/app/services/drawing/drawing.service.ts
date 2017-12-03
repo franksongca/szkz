@@ -1,6 +1,7 @@
 /// <reference path="../../../../node_modules/createjs-module/createjs.d.ts" />
 import { Injectable } from '@angular/core';
 import * as createjs from 'createjs-module';
+import { ProcessInterface, DeviceTimerService } from './../../services/device-timer.service';
 
 @Injectable()
 export class DrawingService {
@@ -82,13 +83,40 @@ export class DrawingService {
     return lines;
   }
 
+  static createLines(linesData, linesConfig) {
+    const lines = new createjs.Shape();
+
+    lines.graphics.beginStroke(DrawingService.getRGB(linesConfig.stroke));
+    lines.graphics.setStrokeStyle(linesConfig.thickness);
+    linesData.forEach((line, index) => {
+      lines.graphics.moveTo(line.start.x, line.start.y);
+      lines.graphics.lineTo(line.end.x, line.end.y);
+    });
+
+    return lines;
+  }
+
   static createBitmap(options) {
     const img = new Image();
     img.src = options.data;
     const btm = new createjs.Bitmap(img);
     btm.cursor = options.cursor ? options.cursor : 'default';
     btm.scaleX = btm.scaleY = options.scale ? options.scale : 1;
+
     return btm;
+  }
+
+  // make sure bitmap is rendering
+  static updateStage(stage) {
+    const process: ProcessInterface = {
+      renderFunc: () => {
+        stage.update();
+      },
+      totalLoops: 3,
+      interval: 3
+    };
+
+    DeviceTimerService.register(process);
   }
 
   private static getRGB(colorValue) {

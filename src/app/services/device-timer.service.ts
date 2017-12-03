@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { CommonService } from './common.service'
+import { CommonService } from './common.service';
 
 
 export interface ProcessInterface {
-  callee?: any,
-  timeStamp?: Number,
-  renderFunc: Function,
-  completeFunc?: Function,
-  totalLoops: Number,  // 0=endless
-  interval: Number,
-  indexInterval?: Number,
-  indexLoops?: Number,
-  complete?: boolean
+  callee?: any;
+  timeStamp?: Number;
+  renderFunc: Function;
+  completeFunc?: Function;
+  totalLoops: Number;  // 0=endless
+  interval: Number;
+  indexInterval?: Number;
+  indexLoops?: Number;
+  complete?: boolean;
 }
 
 @Injectable()
@@ -26,7 +26,7 @@ export class DeviceTimerService {
       return;
     }
 
-    let w = (<any>window);
+    const w = (<any>window);
 
     DeviceTimerService.requestAnimationFrame = w.requestAnimationFrame ||
       w.webkitRequestAnimationFrame ||
@@ -45,16 +45,16 @@ export class DeviceTimerService {
   }
 
   private static deviceTimer() {
-    let processKeys = Object.keys(DeviceTimerService.processes);
+    const processKeys = Object.keys(DeviceTimerService.processes);
 
     processKeys.forEach((key) => {
-      let process = DeviceTimerService.processes[key];
+      const process = DeviceTimerService.processes[key];
       process.indexInterval++;
-      if (process.indexInterval > process.interval) {
+      if (process.indexInterval >= process.interval) {
         process.indexInterval = 0;
 
         process.indexLoops++;
-        if (!process.totalLoops || process.indexLoops < process.totalLoops) {
+        if (!process.totalLoops || process.indexLoops <= process.totalLoops) {
           process.renderFunc.apply(process.callee);
         } else {
           // this process id done, remove from the queue
@@ -71,7 +71,7 @@ export class DeviceTimerService {
   }
 
   private static unregister(timeStamp) {
-    delete DeviceTimerService.processes[timeStamp]
+    delete DeviceTimerService.processes[timeStamp];
   }
 
   static register(process: ProcessInterface) {
@@ -87,7 +87,7 @@ export class DeviceTimerService {
   }
 
   static cleanTimerQueue() {
-    let processKeys = Object.keys(DeviceTimerService.processes);
+    const processKeys = Object.keys(DeviceTimerService.processes);
 
     processKeys.forEach((key) => {
       DeviceTimerService.unregister(key);

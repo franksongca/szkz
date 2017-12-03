@@ -3,29 +3,40 @@ import { DrawingService } from './../../drawing/drawing.service';
 
 @Injectable()
 export class TytsDrawGameService {
-  images = [];
+  static LINES_SCALE = 1.338;
+  static IMAGE_PATH = './assets/imgs/games/';
+  fillInAreaShapes = [];
+  fillInLinesImg;
 
-  constructor(@Inject('stage') @Optional() public stage?: any, @Inject('imgs') @Optional() public imgs?: any, @Inject('scale') @Optional() public scale?: Number) {
-    const a = scale;
+  // constructor(@Inject('stage') @Optional() public stage?: any, @Inject('imgs') @Optional() public imgs?: any, @Inject('scale') @Optional() public scale?: Number) {
+
+  constructor(@Inject('options') @Optional() public options: any) {
   }
 
   drawImages() {
-    const keys = Object.keys(this.imgs);
-    keys.forEach((key) => {
-      const img = DrawingService.createBitmap({data: this.imgs[key].data, scale: this.scale, cursor: key === 'lines' ? 'default' : 'pointer'});
+    // const keys = Object.keys(this.imgs.pieces);
 
-      if (key !== 'lines') {
-        img.x = this.imgs[key].pos.x;
-        img.y = this.imgs[key].pos.y;
-      }
-      //this.stage.addChild(img);
-      this.images.push(img);
+    this.options.imageInfo.pieces.forEach((piece, index) => {
+      const imgShape = DrawingService.createLines(piece.lines, {thickness: 1, stroke: 'white'});
+      imgShape.x = this.options.pos.x + piece.pos.x * this.options.scale;
+      imgShape.y = this.options.pos.y + piece.pos.y * this.options.scale;
+      imgShape.scaleX = imgShape.scaleY = this.options.scale * TytsDrawGameService.LINES_SCALE;
+      imgShape.cursor = 'pointer';
+      this.options.stage.addChild(imgShape);
+      DrawingService.updateStage(this.options.stage);
+
+      this.fillInAreaShapes.push({index: index, name: piece.name, shape: imgShape});
     });
 
-    this.images[10].x = 168;
-    this.images[10].y = 358;
-    this.stage.addChild(this.images[10]);
-    this.stage.addChild(this.images[0]);
-    this.stage.update();
+    const path = TytsDrawGameService.IMAGE_PATH + this.options.type + '/' + this.options.code + '/lines' + '.png';
+    const img = DrawingService.createBitmap({data: path, scale: this.options.scale, cursor: 'pointer'});
+
+    img.x = this.options.pos.x + this.options.imageInfo.pos.x * this.options.scale;
+    img.y = this.options.pos.y + this.options.imageInfo.pos.y * this.options.scale;
+    img.cursor = 'default';
+    this.options.stage.addChild(img);
+    this.fillInLinesImg = img;
+
+    DrawingService.updateStage(this.options.stage);
   }
 }

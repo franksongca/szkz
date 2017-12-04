@@ -21,12 +21,14 @@ import { TytsDrawGameService } from './services/game/tyts/tyts-draw-game.service
 
 import { AppComponent } from './app.component';
 
-import { FillInTheColorComponent } from './games/fill-in-the-color/fill-in-the-color.component';
+import { FillInTheColorComponent } from './games/fill-in-the-color/template/fill-in-the-color.component';
+import { GamesMenuComponent } from './games/games-menu/games-menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FillInTheColorComponent
+    FillInTheColorComponent,
+    GamesMenuComponent
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+.game-container {
+  width: 800px;
+  height: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.test-font {
+  font-family: 楷体;
+}

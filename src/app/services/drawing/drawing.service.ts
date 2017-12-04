@@ -106,6 +106,19 @@ export class DrawingService {
     return btm;
   }
 
+  static createPenBrash(options) {
+    const c = new createjs.Shape();
+    c.graphics.beginFill(options.fill);
+    c.graphics.beginStroke(options.stroke);
+    c.graphics.moveTo(10, 0);
+    c.graphics.quadraticCurveTo(4, 40, 18, 60);
+    c.graphics.quadraticCurveTo(36, 40, 26, 0);
+    c.graphics.lineTo(10, 0);
+
+    return c;
+  }
+
+
   // make sure bitmap is rendering
   static updateStage(stage) {
     const process: ProcessInterface = {

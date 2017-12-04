@@ -1,15 +1,15 @@
-/// <reference path="../../../../node_modules/createjs-module/createjs.d.ts" />
+/// <reference path="../../../../../node_modules/createjs-module/createjs.d.ts" />
 import { Component, OnInit, Input, AfterViewInit, OnChanges, EventEmitter } from '@angular/core';
-import { ImageDataService } from './../../services/game/image-data.service';
-import { DrawingService } from './../../services/drawing/drawing.service';
-import { ProcessInterface, DeviceTimerService } from './../../services/device-timer.service';
+import { ImageDataService } from '../../../services/game/image-data.service';
+import { DrawingService } from '../../../services/drawing/drawing.service';
+import { ProcessInterface, DeviceTimerService } from '../../../services/device-timer.service';
 
-import { TytsDrawGameService } from './../../services/game/tyts/tyts-draw-game.service';
+import { TytsDrawGameService } from '../../../services/game/tyts/tyts-draw-game.service';
 
 // import { ZiDrawingService } from '../../services/drawing/zi.drawing.service';
 // import { PinyinDrawingService } from './../../services/drawing/pinyin.drawing.service';
 // import { PinyinService } from './../../services/sz/pinyin.service';
-import { HanziDrawingService } from './../../services/drawing/hanzi.drawing.service';
+import { HanziDrawingService } from '../../../services/drawing/hanzi.drawing.service';
 import * as createjs from 'createjs-module';
 
 @Component({
@@ -19,9 +19,12 @@ import * as createjs from 'createjs-module';
 })
 export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit {
   static GameType = 'tyts';
-  @Input() gameSettings: any;
-  @Input() stylesSettings: any;
+  @Input() gameSharedData;
   @Input() gameCode: string;
+
+  // gameSettings: any;
+  // stylesSettings: any;
+
 
   stage;
   gameImagesInfo;
@@ -34,14 +37,17 @@ export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   ngAfterViewInit() {
-    // TODO -- start drawing
-    this.stage = new createjs.Stage('gamecanvas');
-    this.stage.clear();
-    this.stage.enableMouseOver(10);
-    this.stage.mouseEnabled = true;
-    this.stage.on('mousedown', (e) => {
-      console.log(e.stageX + ':' + e.stageY);
-    });
+
+
+
+    // const c = new createjs.Shape();
+    // c.graphics.beginFill('gray');
+    // c.graphics.beginStroke('gray');
+    // c.graphics.moveTo(10, 0);
+    // c.graphics.quadraticCurveTo(4, 40, 18, 60);
+    // c.graphics.quadraticCurveTo(36, 40, 26, 0);
+    // c.graphics.lineTo(10, 0);
+
 
 
 
@@ -101,24 +107,50 @@ export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit
 
   ngOnChanges(changes) {
     if (changes.gameCode && changes.gameCode.previousValue !== changes.gameCode.currentValue) {
-      this.imageDataService.load(FillInTheColorComponent.GameType, this.gameCode).subscribe(
+      this.imageDataService.loadTytsGameData(FillInTheColorComponent.GameType, this.gameCode).subscribe(
         (response) => {
           this.gameImagesInfo = response;
 
-          this.tytsDrawGameService = new TytsDrawGameService({
-            stage: this.stage,
-            imageInfo: this.gameImagesInfo,
-            scale: 1.1,
-            type: FillInTheColorComponent.GameType,
-            code: this.gameCode,
-            pos: {x: 100, y: 10}
-          });
-          this.tytsDrawGameService.drawImages();
+          this.drawGameStage();
         },
         () => console.log('error occurs when loading images of [' + FillInTheColorComponent.GameType + '][' + this.gameCode + ']')
       );
     }
+
+    if (changes.gameSharedData && changes.gameSharedData.previousValue !== changes.gameSharedData.currentValue) {
+      this.createGameCanvas();
+      this.drawGameStage();
+    }
   }
 
+  drawGameStage() {
+    if (this.gameImagesInfo && this.stage && this.gameSharedData) {
+      this.tytsDrawGameService = new TytsDrawGameService({
+        stage: this.stage,
+        imageInfo: this.gameImagesInfo,
+        scale: 1.1,
+        type: FillInTheColorComponent.GameType,
+        code: this.gameCode,
+        pos: {x: 100, y: 10}
+      });
+      this.tytsDrawGameService.drawImages();
+    }
+  }
+
+  createGameCanvas() {
+    // TODO -- start drawing
+    this.stage = new createjs.Stage('gamecanvas');
+    this.stage.clear();
+    this.stage.enableMouseOver(10);
+    this.stage.mouseEnabled = true;
+    this.stage.on('mousedown', (e) => {
+      console.log(e.stageX + ':' + e.stageY);
+    });
+
+    const c = DrawingService.createPenBrash({fill: 'red', stroke: 'red'});
+    this.stage.addChild(c);
+    this.stage.update();
+
+  }
 
 }

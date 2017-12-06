@@ -40,36 +40,11 @@ export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit
 
 
 
-    // const c = new createjs.Shape();
-    // c.graphics.beginFill('gray');
-    // c.graphics.beginStroke('gray');
-    // c.graphics.moveTo(10, 0);
-    // c.graphics.quadraticCurveTo(4, 40, 18, 60);
-    // c.graphics.quadraticCurveTo(36, 40, 26, 0);
-    // c.graphics.lineTo(10, 0);
 
 
 
 
 
-    // const box = new createjs.Shape();
-    // box.graphics.beginLinearGradientFill(['#000000', 'rgba(255, 0, 0, 0)'], [0, 1], 0, 0, 100, 100);
-    // box.graphics.drawRect(0, 0, 100, 100);
-    // box.cache(0, 0, 100, 100);
-    //
-    // const bmp = DrawingService.createBitmap({data: 'assets/imgs/games/tyts/Pic_2/a.png', cursor: 'pointer', scale: 1});
-    // bmp.filters = [
-    //   new createjs.AlphaMaskFilter(<any>box.cacheCanvas)
-    // ];
-    // bmp.cache(0, 0, 100, 100);
-    //
-    // this.stage.addChild(box);
-
-    // box.updateCache('h');
-    // bmp.updateCache();
-
-
-//    DrawingService.updateStage(this.stage);
 
 
 
@@ -152,5 +127,4 @@ export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit
     this.stage.update();
 
   }
-
 }

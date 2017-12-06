@@ -106,17 +106,40 @@ export class DrawingService {
     return btm;
   }
 
+  // static createPenBrash(options) {
+  //   const c = new createjs.Shape();
+  //   c.graphics.beginFill(options.fill);
+  //   c.graphics.beginStroke(options.stroke);
+  //   c.graphics.moveTo(10, 0);
+  //   c.graphics.quadraticCurveTo(4, 40, 18, 60);
+  //   c.graphics.quadraticCurveTo(36, 40, 26, 0);
+  //   c.graphics.lineTo(10, 0);
+  //
+  //   return c;
+  // }
+
   static createPenBrash(options) {
+    const d = new createjs.Shape();
+    d.graphics.setStrokeStyle(0)
+      .beginStroke(DrawingService.getRGB('green'))
+      .beginFill(DrawingService.getRGB('green'))
+      .drawRect(0, 0, 32, 72);
+    d.x = 6;
+    d.y = 0;
     const c = new createjs.Shape();
-    c.graphics.beginFill(options.fill);
-    c.graphics.beginStroke(options.stroke);
+    c.graphics.beginFill('black');
+    c.graphics.beginStroke('black');
     c.graphics.moveTo(10, 0);
     c.graphics.quadraticCurveTo(4, 40, 18, 60);
     c.graphics.quadraticCurveTo(36, 40, 26, 0);
     c.graphics.lineTo(10, 0);
 
-    return c;
+    c.scaleX = 0.9;
+    c.scaleY = 1.2;
+    d.mask = c;
+    return d;
   }
+
 
 
   // make sure bitmap is rendering

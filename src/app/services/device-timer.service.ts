@@ -55,6 +55,7 @@ export class DeviceTimerService {
 
         process.indexLoops++;
         if (!process.totalLoops || process.indexLoops <= process.totalLoops) {
+          // console.log(process.indexLoops + ':' + process.totalLoops);
           process.renderFunc.apply(process.callee);
         } else {
           // this process id done, remove from the queue

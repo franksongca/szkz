@@ -23,7 +23,7 @@ export class TytsDrawGameService {
       imgShape.scaleX = imgShape.scaleY = this.options.scale * TytsDrawGameService.LINES_SCALE;
       imgShape.cursor = 'pointer';
       this.options.stage.addChild(imgShape);
-      DrawingService.updateStage(this.options.stage);
+      DrawingService.updateStage();
 
       this.fillInAreaShapes.push({index: index, name: piece.name, shape: imgShape});
     });
@@ -37,6 +37,6 @@ export class TytsDrawGameService {
     this.options.stage.addChild(img);
     this.fillInLinesImg = img;
 
-    DrawingService.updateStage(this.options.stage);
+    DrawingService.updateStage();
   }
 }

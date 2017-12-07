@@ -115,16 +115,26 @@ export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit
   createGameCanvas() {
     // TODO -- start drawing
     this.stage = new createjs.Stage('gamecanvas');
-    this.stage.clear();
-    this.stage.enableMouseOver(10);
-    this.stage.mouseEnabled = true;
-    this.stage.on('mousedown', (e) => {
-      console.log(e.stageX + ':' + e.stageY);
-    });
+    DrawingService.Stage = this.stage;
 
-    const c = DrawingService.createPenBrash({fill: 'red', stroke: 'red'});
+
+
+
+
+
+
+    // this.stage.clear();
+    // this.stage.enableMouseOver(10);
+    // this.stage.mouseEnabled = true;
+    // this.stage.on('mousedown', (e) => {
+    //   console.log(e.stageX + ':' + e.stageY);
+    // });
+
+    const c = DrawingService.createPenBrash({fill: 'red', stroke: 'red', penData: this.gameSharedData.pen});
     this.stage.addChild(c);
     this.stage.update();
 
+    // DrawingService.emptyInk();
+    DrawingService.fillInk('red');
   }
 }

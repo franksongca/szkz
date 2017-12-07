@@ -5,6 +5,8 @@ import { ProcessInterface, DeviceTimerService } from './../../services/device-ti
 
 @Injectable()
 export class DrawingService {
+  static PenObject;
+  static Stage;
 
   constructor() {
   }
@@ -119,13 +121,35 @@ export class DrawingService {
   // }
 
   static createPenBrash(options) {
+    if (DrawingService.PenObject && DrawingService.PenObject.container) {
+      DrawingService.PenObject.container.clear();
+    }
+
+    const pen = DrawingService.createBitmap({data: options.penData, cursor: 'default', scale: 1});
+
+    const b = new createjs.Shape();
+    b.graphics.beginFill('lightgray');
+    b.graphics.setStrokeStyle(1);
+    b.graphics.beginStroke('black');
+    b.graphics.moveTo(10, 0);
+    b.graphics.quadraticCurveTo(4, 40, 18, 60);
+    b.graphics.quadraticCurveTo(36, 40, 26, 0);
+    b.graphics.lineTo(10, 0);
+
+    b.scaleX = 0.3;
+    b.scaleY = 0.4;
+
+    b.x = 61;
+    b.y = 100;
+
     const d = new createjs.Shape();
-    d.graphics.setStrokeStyle(0)
-      .beginStroke(DrawingService.getRGB('green'))
-      .beginFill(DrawingService.getRGB('green'))
-      .drawRect(0, 0, 32, 72);
-    d.x = 6;
-    d.y = 0;
+    d.graphics.setStrokeStyle(0);
+    // d.graphics.beginStroke(DrawingService.getRGB('green'));
+    const cmd = d.graphics.beginFill(DrawingService.getRGB('green'));
+    d.graphics.drawRect(0, 0, 12, 24);
+    d.x = 60;
+    d.y = 124;  // 100~124;
+
     const c = new createjs.Shape();
     c.graphics.beginFill('black');
     c.graphics.beginStroke('black');
@@ -134,22 +158,65 @@ export class DrawingService {
     c.graphics.quadraticCurveTo(36, 40, 26, 0);
     c.graphics.lineTo(10, 0);
 
-    c.scaleX = 0.9;
-    c.scaleY = 1.2;
+    c.scaleX = 0.3;
+    c.scaleY = 0.4;
+
+    c.x = 61;
+    c.y = 100;
+
     d.mask = c;
-    return d;
+
+    DrawingService.PenObject = {
+      container: new createjs.Container(),
+      ink: d,
+      fillCmd: cmd
+    };
+
+    DrawingService.PenObject.container.addChild(b, d, pen);
+    return DrawingService.PenObject['container'];
+  }
+
+  static fillInk(color) {
+    DrawingService.PenObject.ink.graphics.setStrokeStyle(0);
+    // d.graphics.beginStroke(DrawingService.getRGB('green'));
+    DrawingService.PenObject.ink.graphics.beginFill(DrawingService.getRGB(color));
+    DrawingService.PenObject.ink.graphics.drawRect(0, 0, 12, 24);
+
+
+    createjs.Tween.get(DrawingService.PenObject.ink)
+      .wait(70)
+      .to({y: 100}, 400)
+      .call(() => {
+        DrawingService.PenObject['ink'].y = 100;
+        DrawingService.updateStage(3, 3);
+      });
+
+    DrawingService.updateStage(3, 10);
+  }
+
+  static emptyInk() {
+    createjs.Tween.get(DrawingService.PenObject.ink)
+      .wait(70)
+      .to({y: 124}, 400)
+      .call(() => {
+        DrawingService.PenObject['ink'].y = 124;
+        DrawingService.updateStage(3, 3);
+      });
+
+    DrawingService.updateStage(3, 10);
   }
 
 
-
   // make sure bitmap is rendering
-  static updateStage(stage) {
+  static updateStage(loops?, interval?) {
+    // console.log(loops + ', ' + interval);
     const process: ProcessInterface = {
       renderFunc: () => {
-        stage.update();
+        // console.log('UPDATE ...');
+        DrawingService.Stage.update();
       },
-      totalLoops: 3,
-      interval: 3
+      totalLoops: loops ? loops : 3,
+      interval: interval ? interval : 3
     };
 
     DeviceTimerService.register(process);

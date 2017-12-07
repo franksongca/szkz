@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GamesMenuComponent } from './games-menu.component';
+import { TytsMenuComponent } from './tyts-menu.component';
 
-describe('GamesMenuComponent', () => {
-  let component: GamesMenuComponent;
-  let fixture: ComponentFixture<GamesMenuComponent>;
+describe('TytsMenuComponent', () => {
+  let component: TytsMenuComponent;
+  let fixture: ComponentFixture<TytsMenuComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GamesMenuComponent ]
+      declarations: [ TytsMenuComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GamesMenuComponent);
+    fixture = TestBed.createComponent(TytsMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

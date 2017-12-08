@@ -69,7 +69,6 @@ export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit
     // const img = DrawingService.createBitmap({data: './assets/imgs/loading.gif', scale: 1, cursor: 'pointer'});
     // this.stage.addChild(img);
     //
-    // DrawingService.updateStage(this.stage);
 
     // the stage.update makes drawing bitmap works!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // hzDrawing.ziColorFlicking(this.stage, ['purple', 'white', 'darkred'], 20, 20);
@@ -109,32 +108,40 @@ export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit
         pos: {x: 100, y: 10}
       });
       this.tytsDrawGameService.drawImages();
+
+
+      const c = DrawingService.createPenBrash({fill: 'red', stroke: 'red', penData: this.gameSharedData.pen});
+      this.stage.addChild(c);
+      this.stage.update();
+
+      // DrawingService.emptyInk();
+      DrawingService.fillInk('red');
+
+
+
+
     }
   }
 
   createGameCanvas() {
     // TODO -- start drawing
     this.stage = new createjs.Stage('gamecanvas');
-    DrawingService.Stage = this.stage;
+
+
+    DrawingService.setupStage(this.stage);
 
 
 
 
 
+    this.stage.clear();
+    this.stage.enableMouseOver(10);
+    this.stage.mouseEnabled = true;
+    this.stage.on('mousedown', (e) => {
+      console.log(e.stageX + ':' + e.stageY);
+      DrawingService.movePenTo(e.stageX, e.stageY);
+      //DrawingService.emptyInk();
+    });
 
-
-    // this.stage.clear();
-    // this.stage.enableMouseOver(10);
-    // this.stage.mouseEnabled = true;
-    // this.stage.on('mousedown', (e) => {
-    //   console.log(e.stageX + ':' + e.stageY);
-    // });
-
-    const c = DrawingService.createPenBrash({fill: 'red', stroke: 'red', penData: this.gameSharedData.pen});
-    this.stage.addChild(c);
-    this.stage.update();
-
-    // DrawingService.emptyInk();
-    DrawingService.fillInk('red');
   }
 }

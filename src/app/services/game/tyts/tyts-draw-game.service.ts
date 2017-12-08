@@ -23,11 +23,11 @@ export class TytsDrawGameService {
       imgShape.scaleX = imgShape.scaleY = this.options.scale * TytsDrawGameService.LINES_SCALE;
       imgShape.cursor = 'pointer';
       this.options.stage.addChild(imgShape);
-      DrawingService.updateStage();
 
       this.fillInAreaShapes.push({index: index, name: piece.name, shape: imgShape});
     });
 
+    // draw outline image
     const path = TytsDrawGameService.IMAGE_PATH + this.options.type + '/' + this.options.code + '/lines' + '.png';
     const img = DrawingService.createBitmap({data: path, scale: this.options.scale, cursor: 'pointer'});
 
@@ -36,7 +36,5 @@ export class TytsDrawGameService {
     img.cursor = 'default';
     this.options.stage.addChild(img);
     this.fillInLinesImg = img;
-
-    DrawingService.updateStage();
   }
 }

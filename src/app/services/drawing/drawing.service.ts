@@ -169,10 +169,13 @@ export class DrawingService {
     DrawingService.PenObject = {
       container: new createjs.Container(),
       ink: d,
-      fillCmd: cmd
+      fillCmd: cmd,
+      point: {left: -3, top: 140}
     };
 
     DrawingService.PenObject.container.addChild(b, d, pen);
+
+    DrawingService.PenObject.container.rotation = 30;
     return DrawingService.PenObject['container'];
   }
 
@@ -188,35 +191,41 @@ export class DrawingService {
       .to({y: 100}, 400)
       .call(() => {
         DrawingService.PenObject['ink'].y = 100;
-        DrawingService.updateStage(3, 3);
       });
-
-    DrawingService.updateStage(3, 10);
   }
+
+  static movePenTo(x, y) {
+    createjs.Tween.get(DrawingService.PenObject.container)
+      .wait(50)
+      .to({
+        x: x - DrawingService.PenObject.point.left,
+        y: y - DrawingService.PenObject.point.top}, 700
+      ).call(() => {
+      DrawingService.emptyInk();
+    });
+  }
+
+
 
   static emptyInk() {
     createjs.Tween.get(DrawingService.PenObject.ink)
-      .wait(70)
+      .wait(170)
       .to({y: 124}, 400)
       .call(() => {
         DrawingService.PenObject['ink'].y = 124;
-        DrawingService.updateStage(3, 3);
       });
-
-    DrawingService.updateStage(3, 10);
   }
 
 
   // make sure bitmap is rendering
-  static updateStage(loops?, interval?) {
-    // console.log(loops + ', ' + interval);
+  static setupStage(stage) {
+    DrawingService.Stage = stage;
     const process: ProcessInterface = {
       renderFunc: () => {
-        // console.log('UPDATE ...');
         DrawingService.Stage.update();
       },
-      totalLoops: loops ? loops : 3,
-      interval: interval ? interval : 3
+      totalLoops: 0,
+      interval: 1
     };
 
     DeviceTimerService.register(process);

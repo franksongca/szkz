@@ -18,13 +18,20 @@ export class TytsDrawGameService {
 
     this.options.imageInfo.pieces.forEach((piece, index) => {
       const imgShape = DrawingService.createLines(piece.lines, {thickness: 1, stroke: 'white'});
-      imgShape.x = this.options.pos.x + piece.pos.x * this.options.scale;
-      imgShape.y = this.options.pos.y + piece.pos.y * this.options.scale;
-      imgShape.scaleX = imgShape.scaleY = this.options.scale * TytsDrawGameService.LINES_SCALE;
-      imgShape.cursor = 'pointer';
-      this.options.stage.addChild(imgShape);
 
-      this.fillInAreaShapes.push({index: index, name: piece.name, shape: imgShape});
+      imgShape.shape.x = this.options.pos.x + piece.pos.x * this.options.scale;
+      imgShape.shape.y = this.options.pos.y + piece.pos.y * this.options.scale;
+      imgShape.shape.scaleX = imgShape.shape.scaleY = this.options.scale * TytsDrawGameService.LINES_SCALE;
+
+      imgShape.shape.mouseEnabled = true;
+      imgShape.shape.cursor = 'pointer';
+      imgShape.shape.addEventListener('mousedown', function(event) {
+        DrawingService.movePenTo(event['rawX'], event['rawY']);
+      });
+
+      this.options.stage.addChild(imgShape.shape);
+
+      this.fillInAreaShapes.push({index: index, name: piece.name, shape: imgShape.shape, status: 0});
     });
 
     // draw outline image

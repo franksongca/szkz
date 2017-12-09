@@ -134,14 +134,14 @@ export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit
 
 
 
-    this.stage.clear();
-    this.stage.enableMouseOver(10);
-    this.stage.mouseEnabled = true;
-    this.stage.on('mousedown', (e) => {
-      console.log(e.stageX + ':' + e.stageY);
-      DrawingService.movePenTo(e.stageX, e.stageY);
-      //DrawingService.emptyInk();
-    });
+    // this.stage.clear();
+    // this.stage.enableMouseOver(10);
+    // this.stage.mouseEnabled = true;
+    // this.stage.on('mousedown', (e) => {
+    //   console.log(e.stageX + ':' + e.stageY);
+    //   DrawingService.movePenTo(e.stageX, e.stageY);
+    //   //DrawingService.emptyInk();
+    // });
 
   }
 }

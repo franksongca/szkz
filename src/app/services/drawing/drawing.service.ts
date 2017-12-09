@@ -87,15 +87,31 @@ export class DrawingService {
 
   static createLines(linesData, linesConfig) {
     const lines = new createjs.Shape();
+    const boundary = {
+      minX: 10000, maxX: 0, minY: 10000, maxY: 0
+    };
 
     lines.graphics.beginStroke(DrawingService.getRGB(linesConfig.stroke));
     lines.graphics.setStrokeStyle(linesConfig.thickness);
     linesData.forEach((line, index) => {
+      if (line.start.x < boundary.minX) {
+        boundary.minX = line.start.x;
+      }
+      if (line.end.x > boundary.maxX) {
+        boundary.maxX = line.end.x;
+      }
+      if (line.start.y < boundary.minY) {
+        boundary.minY = line.start.y;
+      }
+      if (line.end.y > boundary.maxY) {
+        boundary.maxY = line.end.y;
+      }
+
       lines.graphics.moveTo(line.start.x, line.start.y);
       lines.graphics.lineTo(line.end.x, line.end.y);
     });
 
-    return lines;
+    return {shape: lines, size: {width: boundary.maxX - boundary.minX, height: boundary.maxY - boundary.minY}};
   }
 
   static createBitmap(options) {

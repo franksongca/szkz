@@ -14,10 +14,10 @@ export class TytsDrawGameService {
   }
 
   drawImages() {
-    // const keys = Object.keys(this.imgs.pieces);
+    const self = this;
 
     this.options.imageInfo.pieces.forEach((piece, index) => {
-      const imgShape = DrawingService.createLines(piece.lines, {thickness: 1, stroke: 'white'});
+      const imgShape = DrawingService.createLines(piece.lines, {thickness: 1, stroke: 'white'}, index, piece.name);
 
       imgShape.shape.x = this.options.pos.x + piece.pos.x * this.options.scale;
       imgShape.shape.y = this.options.pos.y + piece.pos.y * this.options.scale;
@@ -26,7 +26,15 @@ export class TytsDrawGameService {
       imgShape.shape.mouseEnabled = true;
       imgShape.shape.cursor = 'pointer';
       imgShape.shape.addEventListener('mousedown', function(event) {
-        DrawingService.movePenTo(event['rawX'], event['rawY']);
+        if (self.fillInAreaShapes[imgShape.index].status === 0 && DrawingService.PenObject.color) {
+          self.fillInAreaShapes[imgShape.index].status = 1;
+          DrawingService.movePenTo(event['rawX'], event['rawY'], () => {
+            const color = DrawingService.PenObject.color;
+            DrawingService.emptyInk(() => {
+              DrawingService.createLines(piece.lines, {thickness: 1, stroke: color}, imgShape.index, imgShape.name, imgShape.shape);
+            });
+          });
+        }
       });
 
       this.options.stage.addChild(imgShape.shape);

@@ -85,15 +85,18 @@ export class DrawingService {
     return lines;
   }
 
-  static createLines(linesData, linesConfig) {
-    const lines = new createjs.Shape();
+  static createLines(linesData, linesConfig, index, name, shape?) {
+    const lines = shape ? shape : new createjs.Shape();
+
+    lines.graphics.clear();
+
     const boundary = {
       minX: 10000, maxX: 0, minY: 10000, maxY: 0
     };
 
     lines.graphics.beginStroke(DrawingService.getRGB(linesConfig.stroke));
     lines.graphics.setStrokeStyle(linesConfig.thickness);
-    linesData.forEach((line, index) => {
+    linesData.forEach((line) => {
       if (line.start.x < boundary.minX) {
         boundary.minX = line.start.x;
       }
@@ -110,8 +113,10 @@ export class DrawingService {
       lines.graphics.moveTo(line.start.x, line.start.y);
       lines.graphics.lineTo(line.end.x, line.end.y);
     });
+    lines.graphics.endStroke();
 
-    return {shape: lines, size: {width: boundary.maxX - boundary.minX, height: boundary.maxY - boundary.minY}};
+    lines.setBounds(boundary.minX, boundary.minY, boundary.maxX - boundary.minX, boundary.maxY - boundary.minY);
+    return {shape: lines, index: index, name: name, size: {width: boundary.maxX - boundary.minX, height: boundary.maxY - boundary.minY}};
   }
 
   static createBitmap(options) {
@@ -195,7 +200,8 @@ export class DrawingService {
     return DrawingService.PenObject['container'];
   }
 
-  static fillInk(color) {
+  static fillInk(color, callback?) {
+    DrawingService.PenObject.color = color;
     DrawingService.PenObject.ink.graphics.setStrokeStyle(0);
     // d.graphics.beginStroke(DrawingService.getRGB('green'));
     DrawingService.PenObject.ink.graphics.beginFill(DrawingService.getRGB(color));
@@ -207,28 +213,37 @@ export class DrawingService {
       .to({y: 100}, 400)
       .call(() => {
         DrawingService.PenObject['ink'].y = 100;
+        if (callback) {
+          callback();
+        }
       });
   }
 
-  static movePenTo(x, y) {
+  static movePenTo(x, y, callback?) {
     createjs.Tween.get(DrawingService.PenObject.container)
       .wait(50)
       .to({
         x: x - DrawingService.PenObject.point.left,
         y: y - DrawingService.PenObject.point.top}, 700
       ).call(() => {
-      DrawingService.emptyInk();
+      if (callback) {
+        callback();
+      }
+      // DrawingService.emptyInk(callback);
     });
   }
 
+  static emptyInk(callback?) {
+    DrawingService.PenObject.color = '';
 
-
-  static emptyInk() {
     createjs.Tween.get(DrawingService.PenObject.ink)
       .wait(170)
       .to({y: 124}, 400)
       .call(() => {
         DrawingService.PenObject['ink'].y = 124;
+        if (callback) {
+          callback();
+        }
       });
   }
 

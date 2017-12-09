@@ -110,12 +110,12 @@ export class FillInTheColorComponent implements OnInit, OnChanges, AfterViewInit
       this.tytsDrawGameService.drawImages();
 
 
-      const c = DrawingService.createPenBrash({fill: 'red', stroke: 'red', penData: this.gameSharedData.pen});
+      const c = DrawingService.createPenBrash({fill: 'green', stroke: 'green', penData: this.gameSharedData.pen});
       this.stage.addChild(c);
       this.stage.update();
 
       // DrawingService.emptyInk();
-      DrawingService.fillInk('red');
+      DrawingService.fillInk('green');
 
 
 
